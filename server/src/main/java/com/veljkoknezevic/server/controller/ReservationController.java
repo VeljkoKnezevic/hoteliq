@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    @GetMapping
-    public ResponseEntity<?> reservationHistory() {
-
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> detailedReservationInfo(@PathVariable int id) {
-
-    }
-
-    @PostMapping
-    public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
-
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> cancelReservation(@PathVariable int id) {
-
-    }
+//    @GetMapping
+//    public ResponseEntity<?> reservationHistory() {
+//
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> detailedReservationInfo(@PathVariable int id) {
+//
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
+//
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> cancelReservation(@PathVariable int id) {
+//
+//    }
 
 }

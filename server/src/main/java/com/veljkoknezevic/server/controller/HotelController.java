@@ -27,42 +27,42 @@ public class HotelController {
         return ResponseEntity.ok(hotel);
     }
 
-    @PostMapping
-    public ResponseEntity<?> addHotel(@RequestBody Hotel hotel) {
-
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editHotel(@PathVariable int id, @RequestBody Hotel hotel) {
-
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteHotel(@PathVariable int id) {
-
-    }
+//    @PostMapping
+//    public ResponseEntity<?> addHotel(@RequestBody Hotel hotel) {
+//
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> editHotel(@PathVariable int id, @RequestBody Hotel hotel) {
+//
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteHotel(@PathVariable int id) {
+//
+//    }
 
     // Room Endpoints
 
-    @GetMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<?> findRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-
-    }
-
-    @PostMapping("/{hotelId}/rooms")
-    public ResponseEntity<?> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
-
-    }
-
-    @PutMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<?> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
-
-    }
-
-    @DeleteMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-
-    }
+//    @GetMapping("/{hotelId}/rooms/{roomId}")
+//    public ResponseEntity<?> findRoom(@PathVariable int hotelId, @PathVariable int roomId) {
+//
+//    }
+//
+//    @PostMapping("/{hotelId}/rooms")
+//    public ResponseEntity<?> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
+//
+//    }
+//
+//    @PutMapping("/{hotelId}/rooms/{roomId}")
+//    public ResponseEntity<?> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
+//
+//    }
+//
+//    @DeleteMapping("/{hotelId}/rooms/{roomId}")
+//    public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
+//
+//    }
 
 
 }
