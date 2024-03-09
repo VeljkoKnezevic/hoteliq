@@ -2,6 +2,8 @@ package com.veljkoknezevic.server.controller;
 
 import com.veljkoknezevic.server.model.Hotel;
 import com.veljkoknezevic.server.model.Room;
+import com.veljkoknezevic.server.service.HotelService;
+import com.veljkoknezevic.server.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +11,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/hotels")
 public class HotelController {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getHotelById(@PathVariable int id) {
+    private final RoomService roomService;
 
+    private final HotelService hotelService;
+
+    public HotelController(RoomService roomService, HotelService hotelService) {
+        this.roomService = roomService;
+        this.hotelService = hotelService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Hotel> getHotelById(@PathVariable int id) {
+        Hotel hotel = hotelService.findHotelById(id);
+
+        return ResponseEntity.ok(hotel);
     }
 
     @PostMapping
