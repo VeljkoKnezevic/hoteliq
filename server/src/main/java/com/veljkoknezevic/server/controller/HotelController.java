@@ -27,20 +27,26 @@ public class HotelController {
         return ResponseEntity.ok(hotel);
     }
 
-//    @PostMapping
-//    public ResponseEntity<?> addHotel(@RequestBody Hotel hotel) {
-//
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> editHotel(@PathVariable int id, @RequestBody Hotel hotel) {
-//
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deleteHotel(@PathVariable int id) {
-//
-//    }
+    @PostMapping
+    public ResponseEntity<Hotel> addHotel(@RequestBody Hotel hotel) {
+        Hotel addedHotel = hotelService.addHotel(hotel);
+
+        return ResponseEntity.ok(addedHotel);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Hotel> editHotel(@PathVariable int id, @RequestBody Hotel hotel) {
+        Hotel response = hotelService.editHotel(id,hotel);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable int id) {
+        hotelService.deleteHotel(id);
+
+        return ResponseEntity.ok(null);
+    }
 
     // Room Endpoints
 

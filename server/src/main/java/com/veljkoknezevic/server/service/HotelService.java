@@ -22,4 +22,33 @@ public class HotelService {
 
         return hotel.orElseThrow(() -> new HotelNotFoundException(id));
     }
+
+    public Hotel addHotel(Hotel hotel) {
+        if(hotel != null) {
+            hotelRepository.save(hotel);
+        }
+
+        return hotel;
+    }
+
+    public Hotel editHotel(int id, Hotel hotel) throws HotelNotFoundException {
+        Optional<Hotel> optionalHotel = hotelRepository.findHotelById(id);
+        Hotel dbHotel;
+
+        if(optionalHotel.isPresent()) {
+            dbHotel = optionalHotel.get();
+
+            dbHotel.setName(hotel.getName());
+            dbHotel.setAddress(hotel.getAddress());
+            dbHotel.setLocation(hotel.getLocation());
+
+            return hotelRepository.save(dbHotel);
+        } else {
+            throw new HotelNotFoundException(id);
+        }
+    }
+
+    public void deleteHotel(int id) {
+        hotelRepository.deleteById(id);
+    }
 }
