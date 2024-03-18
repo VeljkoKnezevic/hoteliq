@@ -2,6 +2,8 @@ package com.veljkoknezevic.server.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Room {
 
@@ -15,9 +17,10 @@ public class Room {
 
     private boolean isAvailable;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "hotelId", nullable = false)
-    private Hotel hotel;
+
+    @ManyToOne
+    @JoinColumn(name = "hotelId")
+    public Hotel hotel;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "roomTypeId", nullable = false)
     private RoomType roomType;

@@ -1,9 +1,8 @@
 package com.veljkoknezevic.server.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Hotel {
@@ -17,6 +16,11 @@ public class Hotel {
     private String address;
 
     private String location;
+
+
+    @OneToMany(mappedBy = "hotel")
+    public List<Room> room;
+
 
     public int getId() {
         return id;
@@ -48,5 +52,13 @@ public class Hotel {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Room> getRoom() {
+        return room;
+    }
+
+    public void setRoom(List<Room> room) {
+        this.room = room;
     }
 }

@@ -50,25 +50,33 @@ public class HotelController {
 
     // Room Endpoints
 
-//    @GetMapping("/{hotelId}/rooms/{roomId}")
-//    public ResponseEntity<?> findRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-//
-//    }
-//
-//    @PostMapping("/{hotelId}/rooms")
-//    public ResponseEntity<?> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
-//
-//    }
-//
-//    @PutMapping("/{hotelId}/rooms/{roomId}")
-//    public ResponseEntity<?> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
-//
-//    }
-//
-//    @DeleteMapping("/{hotelId}/rooms/{roomId}")
-//    public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-//
-//    }
+    @GetMapping("/{hotelId}/rooms/{roomId}")
+    public ResponseEntity<Room> findRoom(@PathVariable int hotelId, @PathVariable int roomId) {
+        Room room = roomService.findRoom(hotelId, roomId);
+
+        return ResponseEntity.ok(room);
+    }
+
+    @PostMapping("/{hotelId}/rooms")
+    public ResponseEntity<Room> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
+        Room response = roomService.addRoom(room, hotelId);
+
+        return ResponseEntity.ok(room);
+    }
+
+    @PutMapping("/{hotelId}/rooms/{roomId}")
+    public ResponseEntity<Room> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
+        Room response = roomService.editRoom(hotelId, roomId, room);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{hotelId}/rooms/{roomId}")
+    public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
+        roomService.deleteRoom(hotelId, roomId);
+
+        return ResponseEntity.status(200).body(null);
+    }
 
 
 }
