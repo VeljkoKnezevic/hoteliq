@@ -19,10 +19,10 @@ public class Room {
 
 
     @ManyToOne
-    @JoinColumn(name = "hotelId")
+    @JoinColumn(name = "hotelId", nullable = false)
     public Hotel hotel;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "roomTypeId", nullable = false)
+    @JoinColumn(name = "roomTypeId", nullable = true)
     private RoomType roomType;
 
     public int getId() {

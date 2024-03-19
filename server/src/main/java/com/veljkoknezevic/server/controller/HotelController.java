@@ -66,7 +66,7 @@ public class HotelController {
 
     @PutMapping("/{hotelId}/rooms/{roomId}")
     public ResponseEntity<Room> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
-        Room response = roomService.editRoom(hotelId, roomId, room);
+        Room response = roomService.editRoom(roomId, hotelId, room);
 
         return ResponseEntity.ok(response);
     }

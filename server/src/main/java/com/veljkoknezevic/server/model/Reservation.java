@@ -22,7 +22,9 @@ public class Reservation {
     private Date end;
 
     // Need to implement statuses for pending, refund,...
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "status", nullable = false)
+    private Status status;
 
     @OneToOne
     @JoinColumn(name = "guestId")
@@ -68,11 +70,11 @@ public class Reservation {
         this.end = end;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -32,11 +32,7 @@ public class RoomService {
     }
 
     public Room addRoom(Room room, int hotelId) {
-        if(hotelId == room.getHotel().getId()) {
-            roomRepository.save(room);
-        } else {
-            throw new HotelNotFoundException(hotelId);
-        }
+        roomRepository.save(room);
 
         return room;
     }
