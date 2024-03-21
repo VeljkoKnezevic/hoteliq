@@ -5,9 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Guest implements UserDetails {
@@ -21,9 +19,32 @@ public class Guest implements UserDetails {
     private String email;
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "guest_role_junction",
+            joinColumns = @JoinColumn(name = "guest_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> authorities;
+
     @OneToOne
     @JoinColumn(name = "reservationId")
     private Reservation reservation;
+
+    public Guest() {
+        super();
+        this.authorities = new HashSet<Role>();
+    }
+
+    public Guest(int id, String firstName, String lastName, String email, String password, Set<Role> authorities, Reservation reservation) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+        this.reservation = reservation;
+    }
 
     public int getId() {
         return id;
@@ -59,7 +80,7 @@ public class Guest implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.email));
+        return this.authorities;
     }
 
     public String getPassword() {
