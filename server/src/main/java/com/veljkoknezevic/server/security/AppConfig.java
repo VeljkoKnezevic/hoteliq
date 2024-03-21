@@ -1,6 +1,6 @@
 package com.veljkoknezevic.server.security;
 
-import org.springframework.beans.factory.annotation.Configurable;
+import com.veljkoknezevic.server.repository.GuestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AppConfig {
 
+    private final GuestRepository guestRepository;
+
+    public AppConfig(GuestRepository guestRepository) {
+        this.guestRepository = guestRepository;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -25,12 +31,8 @@ public class AppConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withUsername("user")
-                .password(encoder().encode("userPass"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    public CustomUserDetailsService userDetailsService() {
+        return new CustomUserDetailsService(guestRepository);
     }
 
     @Bean
