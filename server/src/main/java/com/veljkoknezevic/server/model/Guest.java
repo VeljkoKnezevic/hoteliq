@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +17,11 @@ public class Guest implements UserDetails {
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
+
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -34,6 +39,12 @@ public class Guest implements UserDetails {
     public Guest() {
         super();
         this.authorities = new HashSet<Role>();
+    }
+
+    public Guest(String email, String password, Set<Role> authorities) {
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     public Guest(int id, String firstName, String lastName, String email, String password, Set<Role> authorities, Reservation reservation) {

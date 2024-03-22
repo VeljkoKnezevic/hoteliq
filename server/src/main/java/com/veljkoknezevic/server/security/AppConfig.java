@@ -26,7 +26,9 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(c -> c.anyRequest().authenticated())
+                .authorizeHttpRequests(c -> c
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated())
                 .build();
     }
 
