@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.controller;
 
+import com.veljkoknezevic.server.dto.LoginResponseDTO;
 import com.veljkoknezevic.server.dto.RegistrationDTO;
 import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.service.AuthenticationService;
@@ -19,6 +20,11 @@ public class AuthenticationController {
     @PostMapping("/register")
     public Guest register(@RequestBody RegistrationDTO dto) {
         return authenticationService.registerUser(dto.email(), dto.password());
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO loginResponseDTO(@RequestBody RegistrationDTO dto) {
+        return authenticationService.loginUser(dto.email(), dto.password());
     }
 
 }
