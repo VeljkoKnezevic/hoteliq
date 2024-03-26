@@ -75,7 +75,7 @@ public class HotelController {
     public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
         roomService.deleteRoom(hotelId, roomId);
 
-        return ResponseEntity.status(200).body(null);
+        return ResponseEntity.ok(null);
     }
 
 

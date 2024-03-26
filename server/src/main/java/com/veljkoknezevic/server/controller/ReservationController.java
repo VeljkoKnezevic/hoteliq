@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.controller;
 
+import com.veljkoknezevic.server.dto.ReservationDTO;
 import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.model.Reservation;
 import com.veljkoknezevic.server.repository.ReservationRepository;
@@ -12,8 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
-    //Should be disabled until the user is logged in
-
+    //This endpoint should be disabled for user without logging in
     private final ReservationService reservationService;
 
     public ReservationController(ReservationService reservationService) {
@@ -35,10 +35,10 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation addedReservation = reservationService.addReservation(reservation);
+    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO dto) {
+        Reservation reservation = reservationService.addReservation(dto);
 
-        return ResponseEntity.ok(addedReservation);
+        return ResponseEntity.ok(reservation);
     }
 
     @DeleteMapping("/{id}")

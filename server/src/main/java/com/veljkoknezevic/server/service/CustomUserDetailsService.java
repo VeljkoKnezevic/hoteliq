@@ -1,4 +1,4 @@
-package com.veljkoknezevic.server.security;
+package com.veljkoknezevic.server.service;
 
 import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.repository.GuestRepository;

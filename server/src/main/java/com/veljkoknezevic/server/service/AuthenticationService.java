@@ -53,8 +53,6 @@ public class AuthenticationService {
 
         authorities.add(userRole);
 
-
-
         return guestRepository.save(new Guest(email , encoded, authorities));
     }
 

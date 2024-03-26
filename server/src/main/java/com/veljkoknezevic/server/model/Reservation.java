@@ -30,6 +30,18 @@ public class Reservation {
     @JoinColumn(name = "guestId")
     private Guest guest;
 
+    public Reservation(int id, Hotel hotel, Room room, Date start, Date end) {
+        this.id = id;
+        this.hotel = hotel;
+        this.room = room;
+        this.start = start;
+        this.end = end;
+    }
+
+    public Reservation() {
+
+    }
+
     public int getId() {
         return id;
     }
