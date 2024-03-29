@@ -21,11 +21,6 @@ public class Reservation {
     private Date start;
     private Date end;
 
-    // Need to implement statuses for pending, refund,...
-    @ManyToOne
-    @JoinColumn(name = "status", nullable = false)
-    private Status status;
-
     @OneToOne
     @JoinColumn(name = "guestId")
     private Guest guest;
@@ -82,13 +77,6 @@ public class Reservation {
         this.end = end;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     public Guest getGuest() {
         return guest;

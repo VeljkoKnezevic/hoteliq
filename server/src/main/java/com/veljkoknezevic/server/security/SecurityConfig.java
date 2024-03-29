@@ -11,6 +11,7 @@ import com.veljkoknezevic.server.service.CustomUserDetailsService;
 import com.veljkoknezevic.server.util.RsaKeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -43,6 +44,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(c -> c
                         .requestMatchers("/auth/**").permitAll()
+                        // /hotels/** refers to both the hotel and room endpoints of that http method
+                        .requestMatchers(HttpMethod.GET, "/hotels/**").hasAnyRole("GUEST","STAFF")
+                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/reservations/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
                         .anyRequest().authenticated())
                 .build();
     }
