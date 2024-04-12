@@ -1,10 +1,18 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Details from "./pages/Details";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
-    <>
-      <h1>Veljko</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/profile/:id" element={<Profile />} />
+      </Routes>
+    </Router>
   );
 }
 
