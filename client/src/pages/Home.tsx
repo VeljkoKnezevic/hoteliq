@@ -1,5 +1,7 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar";
+
+import HotelCard from "../components/HotelCard";
+import Header from "../components/Header";
 
 const Home = () => {
   //Locations need to be fetched from the backend location list of hotels
@@ -7,7 +9,8 @@ const Home = () => {
   const [search, setSearch] = useState<string>("");
   return (
     <>
-      <header>
+      <Header />
+      <main>
         <form>
           <label htmlFor="location">Current location</label>
           <select name="location" id="location">
@@ -24,19 +27,23 @@ const Home = () => {
             placeholder="Search Hotel"
           />
         </form>
-      </header>
-      <main>
-        <Sidebar />
-
-        <div>
+        <section>
           <h2>Nearby your location</h2>
           <button>See all</button>
-        </div>
+          {/* Mobile side scroll, desktop grid */}
+          <div className="">
+            <HotelCard variant="nearby" />
+          </div>
+        </section>
 
-        <div>
+        <section>
           <h2>Popular Destination</h2>
           <button>See all</button>
-        </div>
+          {/* Both mobile and desktop flex column */}
+          <div className="">
+            <HotelCard variant="popular" />
+          </div>
+        </section>
       </main>
     </>
   );
