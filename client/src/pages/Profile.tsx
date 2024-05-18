@@ -13,9 +13,9 @@ const Profile = () => {
   // Used to updated based on when
   // the form is submited insted of when input is changed,
   // to be able to cancel the changes
-
   const [updated, setUpdated] = useState<ProfileInfo>({ ...info });
 
+  // When set to true input info can be changed
   const [editing, setEditing] = useState<boolean>(false);
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -28,6 +28,14 @@ const Profile = () => {
       email: updated.email,
       password: updated.password,
     }));
+
+    setEditing(false);
+  };
+
+  const cancelEditing = () => {
+    setEditing(false);
+    // Returns the input info to the previous state
+    setUpdated({ ...info });
   };
 
   return (
@@ -91,7 +99,14 @@ const Profile = () => {
             />
           </label>
 
-          {editing && <button type="submit">Confirm editing</button>}
+          {editing && (
+            <>
+              <button type="submit">Confirm editing</button>
+              <button onClick={cancelEditing} type="button">
+                Cancel
+              </button>
+            </>
+          )}
         </form>
       </main>
     </>
