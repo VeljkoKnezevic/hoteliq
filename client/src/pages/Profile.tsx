@@ -34,7 +34,7 @@ const Profile = () => {
 
   const cancelEditing = () => {
     setEditing(false);
-    // Returns the input info to the previous state
+    // Returns the input to the previous state
     setUpdated({ ...info });
   };
 

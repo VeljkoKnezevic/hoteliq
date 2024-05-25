@@ -5,8 +5,8 @@ export default {
     colors: {
       "primary-blue": "#3334CC",
       "secondary-blue": "#4C4DDC",
-      "primary-surface": "#DFE0F3",
-      "secondary-surface": "#F5F5FF",
+      "primary-grey": "#878787",
+      "secondary-grey": "#D6D6D6",
     },
     extend: {
       fontFamily: { jakarta: ["Plus Jakarta Sans", "sans-serif"] },

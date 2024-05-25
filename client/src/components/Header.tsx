@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header>
-      <h1>HotelIQ</h1>
+    <header className="flex items-center pt-6 text-primary-blue">
+      <h1 className="text-2xl">Hotel IQ</h1>
 
-      <div>
+      <div className="ml-auto flex gap-3 text-lg">
         <Link to="/">
           <button>Home</button>
         </Link>
