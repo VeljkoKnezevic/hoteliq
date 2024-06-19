@@ -5,3 +5,7 @@
 body {
   @apply font-jakarta;
 }
+
+#root {
+  @apply min-h-screen;
+}

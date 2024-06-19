@@ -14,7 +14,7 @@ const HotelCard = ({ variant }: THotelCard) => {
             <h3 className="text-sm font-bold text-text-black">
               The Aston Hotel
             </h3>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <img src="star.svg" alt="Star" />
               <p className="text-sm font-bold text-text-black">5.0</p>
             </div>
@@ -56,7 +56,7 @@ const HotelCard = ({ variant }: THotelCard) => {
           <p className="mt-2 text-xs font-medium text-primary-grey">
             Alice Springs NT0870, Australia
           </p>
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2 flex items-center gap-2">
             <img src="star.svg" alt="Star" />
             <p className="text-sm font-bold text-text-black">5.0</p>
           </div>
