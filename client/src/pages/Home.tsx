@@ -2,20 +2,33 @@ import { useState } from "react";
 
 import HotelCard from "../components/HotelCard";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Slider from "react-slick";
+// Import css files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Home = () => {
   //Locations need to be fetched from the backend location list of hotels
   const [location, setLocation] = useState<string>("Spain");
   const [search, setSearch] = useState<string>("");
-  console.log(location);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
-    <div className="mx-6">
+    <>
       <Header />
-      <main>
+      <main className="mx-6">
         <form className="mt-6">
           <div className="flex w-1/2 flex-col">
             <label
-              className="text-xs font-bold text-[#878787]"
+              className="mb-1 text-xs font-bold text-[#878787]"
               htmlFor="location"
             >
               Current location
@@ -35,6 +48,7 @@ const Home = () => {
                 onChange={(e) => setLocation(e.target.value)}
                 name="location"
                 id="location"
+                className="text-sm font-medium text-text-black"
                 defaultValue={0}
               >
                 <option value="Spain">Spain</option>
@@ -47,31 +61,45 @@ const Home = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             type="text"
-            className="border-secondary-grey mt-6 w-full rounded-lg border-2 bg-[url('/search.svg')] bg-[center_left_0.5rem] bg-no-repeat py-3 pl-8 text-sm font-medium"
+            className="mt-5 w-full rounded-lg border-2 border-secondary-grey bg-[url('/search.svg')] bg-[center_left_0.5rem] bg-no-repeat py-3 pl-8 text-sm font-medium"
             placeholder="Search Hotel"
           />
         </form>
         <section>
-          <h2>Nearby your location</h2>
-          <button>See all</button>
-          {/* Mobile side scroll, desktop grid */}
-          <div className="grid">
-            <HotelCard variant="nearby" />
-            <HotelCard variant="nearby" />
+          <div className="mt-6 flex justify-between">
+            <h2 className="text-base font-bold text-text-black">
+              Nearby your location
+            </h2>
+            <button className="text-sm font-medium text-secondary-blue">
+              See all
+            </button>
           </div>
+          {/* Mobile side scroll, desktop grid */}
+          <Slider className="mt-6" {...settings}>
+            <HotelCard variant="nearby" />
+            <HotelCard variant="nearby" />
+            <HotelCard variant="nearby" />
+          </Slider>
         </section>
 
         <section>
-          <h2>Popular Destination</h2>
-          <button>See all</button>
+          <div className="mt-10 flex justify-between">
+            <h2 className="text-base font-bold text-text-black">
+              Popular Destination
+            </h2>
+            <button className="text-sm font-medium text-secondary-blue">
+              See all
+            </button>
+          </div>
           {/* Both mobile and desktop flex column */}
-          <div className="flex">
+          <div className="mt-6 flex flex-col">
             <HotelCard variant="popular" />
-            <HotelCard variant="nearby" />
+            <HotelCard variant="popular" />
           </div>
         </section>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 };
 
