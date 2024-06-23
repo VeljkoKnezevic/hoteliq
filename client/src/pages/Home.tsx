@@ -21,6 +21,8 @@ const Home = () => {
     slidesToScroll: 1,
   };
 
+  console.log(location);
+
   return (
     <>
       <Header />

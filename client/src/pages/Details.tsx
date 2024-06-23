@@ -43,7 +43,7 @@ const Details = () => {
               onClick={() => setReadMore(!readMore)}
               className="ml-1 text-sm font-bold text-primary-blue"
             >
-              Read {readMore ? "less" : "more"}
+              {readMore ? "Show less" : "Read more"}
             </button>
           </p>
         </section>

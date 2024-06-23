@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="sticky top-full flex w-screen flex-col bg-primary-blue px-6 py-4 text-[#fff]">
+    <footer className="sticky top-full flex w-full flex-col overflow-hidden bg-primary-blue px-6 py-4 text-[#fff]">
       <div className="flex justify-between">
         <h3 className="text-xl">Hotel IQ</h3>
         <div className="flex items-center gap-3">
