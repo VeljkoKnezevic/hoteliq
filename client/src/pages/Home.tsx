@@ -86,7 +86,7 @@ const Home = () => {
             </button>
           </div>
           {/* Both mobile and desktop flex column */}
-          <div className="mt-6 flex flex-col">
+          <div className="mt-6 flex flex-col pb-4">
             <HotelCard variant="popular" />
             <HotelCard variant="popular" />
           </div>
