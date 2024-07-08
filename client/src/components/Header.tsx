@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="mx-6 flex items-center justify-between pt-6 text-primary-blue">
+    <header className="mx-6 flex items-center justify-between pt-6 text-primary-blue md:mx-10 ">
       <h1 className="text-2xl">Hotel IQ</h1>
 
       <nav>

@@ -7,7 +7,7 @@ type THotelCard = {
 const HotelCard = ({ variant }: THotelCard) => {
   if (variant == "nearby") {
     return (
-      <section className="rounded-lg">
+      <section className="mx-2 max-w-fit rounded-lg">
         <img className="rounded-t-lg" src="/Australia-1.png" alt="" />
         <div className="p-3">
           <div className="flex justify-between">

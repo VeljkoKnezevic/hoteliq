@@ -15,23 +15,32 @@ const Home = () => {
 
   const settings = {
     dots: true,
-    arrows: false,
+    arrows: true,
     infinite: true,
+    centerMode: false,
     speed: 600,
-    slidesToShow: 1,
+    slidesToShow: 2,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          arrows: false,
+          centerMode: false,
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
-
-  console.log(location);
 
   return (
     <>
       <Header />
-      <main className="mx-6">
+      <main className="mx-6 md:mx-10">
         <form className="mt-6">
           <div className="flex w-1/2 flex-col">
             <label
-              className="mb-1 text-xs font-bold text-[#878787]"
+              className="mb-1 text-xs font-bold text-[#878787] md:text-sm"
               htmlFor="location"
             >
               Current location
@@ -62,32 +71,40 @@ const Home = () => {
         </form>
         <section>
           <div className="mt-6 flex justify-between">
-            <h2 className="text-base font-bold text-text-black">
+            <h2 className="text-base font-bold text-text-black md:text-lg">
               Nearby your location
             </h2>
             <button className="text-sm font-medium text-secondary-blue">
               See all
             </button>
           </div>
-          {/* Mobile side scroll, desktop grid */}
           <Slider className="mt-6" {...settings}>
-            <HotelCard variant="nearby" />
-            <HotelCard variant="nearby" />
-            <HotelCard variant="nearby" />
+            <div>
+              <HotelCard variant="nearby" />
+            </div>
+            <div>
+              <HotelCard variant="nearby" />
+            </div>
+            <div>
+              <HotelCard variant="nearby" />
+            </div>
           </Slider>
         </section>
 
         <section>
           <div className="mt-10 flex justify-between">
-            <h2 className="text-base font-bold text-text-black">
+            <h2 className="text-base font-bold text-text-black md:text-lg">
               Popular Destination
             </h2>
             <button className="text-sm font-medium text-secondary-blue">
               See all
             </button>
           </div>
-          {/* Both mobile and desktop flex column */}
-          <div className="mt-6 flex flex-col pb-4">
+          <div className="mt-6 flex flex-col gap-2 pb-4 md:grid md:grid-cols-2">
+            <HotelCard variant="popular" />
+            <HotelCard variant="popular" />
+            <HotelCard variant="popular" />
+            <HotelCard variant="popular" />
             <HotelCard variant="popular" />
             <HotelCard variant="popular" />
           </div>

@@ -6,6 +6,7 @@ body {
   @apply font-jakarta;
 }
 
+/* Footer sticking to the bottom */
 #root {
   @apply min-h-screen;
 }

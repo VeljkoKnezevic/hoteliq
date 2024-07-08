@@ -19,11 +19,11 @@ const Details = () => {
   return (
     <>
       <Header />
-      <main className="m-6">
-        <img className="rounded-md" src="/Spain-1.png" alt="" />
+      <main className="m-6 md:m-10">
+        <img className="mx-auto w-full rounded-md" src="/Spain-1.png" alt="" />
         <Rating />
         <div className="mt-4 flex justify-between">
-          <h3 className="text-base font-bold text-text-black">
+          <h3 className="text-base font-bold text-text-black md:text-lg">
             The Aston Vill hotel
           </h3>
           <p className="text-sm font-medium text-primary-grey">
@@ -38,7 +38,9 @@ const Details = () => {
         </div>
 
         <section className="mt-4">
-          <h4 className="text-sm font-bold text-text-black">Description</h4>
+          <h4 className="text-sm font-bold text-text-black md:text-base">
+            Description
+          </h4>
           <p className="mt-3 text-xs text-primary-grey">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
             cupiditate officiis{!readMore && "..."}
@@ -58,7 +60,7 @@ const Details = () => {
           </p>
         </section>
 
-        <h5 className="mt-4 text-sm font-bold">Preview</h5>
+        <h5 className="mt-4 text-sm font-bold md:text-base">Preview</h5>
         <div className="mt-2 flex gap-4">
           <button onClick={() => handleLightboxClick(0)}>
             <img className="rounded" src="/Spain-1.png" width={100} alt="" />
