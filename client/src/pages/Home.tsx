@@ -15,8 +15,9 @@ const Home = () => {
 
   const settings = {
     dots: true,
+    arrows: false,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
