@@ -19,11 +19,15 @@ const Details = () => {
   return (
     <>
       <Header />
-      <main className="m-6 md:m-10">
-        <img className="mx-auto w-full rounded-md" src="/Spain-1.png" alt="" />
+      <main className="m-6 md:m-10 lg:m-14 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
+        <img
+          className="mx-auto w-full rounded-md lg:aspect-video lg:w-9/12"
+          src="/Spain-1.png"
+          alt=""
+        />
         <Rating />
-        <div className="mt-4 flex justify-between">
-          <h3 className="text-base font-bold text-text-black md:text-lg">
+        <div className="mt-4 flex justify-between lg:mt-6">
+          <h3 className="text-base font-bold text-text-black md:text-lg lg:text-xl xl:text-2xl">
             The Aston Vill hotel
           </h3>
           <p className="text-sm font-medium text-primary-grey">
@@ -32,16 +36,16 @@ const Details = () => {
         </div>
         <div className="mt-2 flex items-center gap-1">
           <img src="/location.svg" alt="location" />
-          <p className="text-xs text-primary-grey">
+          <p className="text-xs text-primary-grey lg:text-sm">
             Alice Springs NT 0870, Australia
           </p>
         </div>
 
-        <section className="mt-4">
-          <h4 className="text-sm font-bold text-text-black md:text-base">
+        <section className="mt-4 lg:mt-6">
+          <h4 className="text-sm font-bold text-text-black md:text-base lg:text-lg xl:text-xl">
             Description
           </h4>
-          <p className="mt-3 text-xs text-primary-grey">
+          <p className="mt-3 text-xs text-primary-grey lg:text-sm">
             Welcome to our tranquil retreat, where luxury meets serenity amidst
             a beautiful coastal setting. Nestled among lush gardens with views
             of the sparkling ocean, our boutique hotel promises a rejuvenating
@@ -72,15 +76,15 @@ const Details = () => {
         </section>
 
         <h5 className="mt-4 text-sm font-bold md:text-base">Preview</h5>
-        <div className="mt-2 flex gap-4">
+        <div className="mt-2 flex flex-col items-center gap-4 md:flex-row md:justify-center">
           <button onClick={() => handleLightboxClick(0)}>
-            <img className="rounded" src="/Spain-1.png" width={100} alt="" />
+            <img className="w-80 rounded md:w-fit" src="/Spain-1.png" alt="" />
           </button>
           <button onClick={() => handleLightboxClick(1)}>
-            <img className="rounded" src="/Spain-2.png" width={100} alt="" />
+            <img className="w-80 rounded md:w-fit" src="/Spain-2.png" alt="" />
           </button>
           <button onClick={() => handleLightboxClick(2)}>
-            <img className="rounded" src="/Spain-3.png" width={100} alt="" />
+            <img className="w-80 rounded md:w-fit" src="/Spain-3.png" alt="" />
           </button>
         </div>
         <Lightbox
