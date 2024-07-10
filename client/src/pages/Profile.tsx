@@ -42,7 +42,7 @@ const Profile = () => {
     <>
       <Header />
 
-      <main className="mx-6 mt-10 rounded-md border-2 border-primary-blue p-3 md:mx-10">
+      <main className="mx-6 mt-10 rounded-md border-2 border-primary-blue p-3 md:mx-10 lg:mx-auto lg:max-w-[800px] xl:max-w-[1000px]">
         <div className="flex justify-between">
           <h2 className="text-lg font-bold text-text-black">Profile</h2>
           {!editing && (

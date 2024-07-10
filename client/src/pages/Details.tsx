@@ -42,13 +42,24 @@ const Details = () => {
             Description
           </h4>
           <p className="mt-3 text-xs text-primary-grey">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-            cupiditate officiis{!readMore && "..."}
+            Welcome to our tranquil retreat, where luxury meets serenity amidst
+            a beautiful coastal setting. Nestled among lush gardens with views
+            of the sparkling ocean, our boutique hotel promises a rejuvenating
+            escape. {!readMore && "..."}
             {readMore && (
               <span>
-                ullam doloremque harum beatae, suscipit eligendi. Voluptatum et
-                doloribus obcaecati iure labore omnis unde, esse corporis, ipsa
-                laboriosam sint.
+                The lobby welcomes you with elegant decor and natural light,
+                setting the stage for a memorable stay. Whether you prefer a
+                cozy room or a spacious suite, each accommodation offers modern
+                amenities and private balconies or terraces overlooking the
+                serene surroundings. <br /> <br /> Indulge your palate at our
+                restaurant, offering a delectable selection of fresh seafood and
+                international cuisine, or unwind with a cocktail at our bar,
+                where you can enjoy stunning sunset views. Our spa invites you
+                to relax with a range of rejuvenating treatments, while our
+                modern meeting facilities cater to business travelers. Explore
+                nearby attractions with guided snorkeling, hiking, and cultural
+                excursions, ensuring a fulfilling stay at our tranquil retreat.
               </span>
             )}
             <button
