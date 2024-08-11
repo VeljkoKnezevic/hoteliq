@@ -1,12 +1,12 @@
-import Popup from "reactjs-popup";
-import { HotelCardVariants } from "../types";
+import { HotelCardVariants, THotel } from "../types";
 import { Link } from "react-router-dom";
 
 type THotelCard = {
   variant: HotelCardVariants;
+  data: THotel;
 };
 
-const HotelCard = ({ variant }: THotelCard) => {
+const HotelCard = ({ variant, data }: THotelCard) => {
   if (variant == "nearby") {
     return (
       <Link to={"/details/1"}>
@@ -15,7 +15,7 @@ const HotelCard = ({ variant }: THotelCard) => {
           <div className="p-3">
             <div className="flex justify-between">
               <h3 className="text-sm font-bold text-text-black">
-                The Aston Hotel
+                {data && data.name}
               </h3>
               <div className="flex items-end gap-2">
                 <img src="star.svg" alt="Star" />
@@ -50,9 +50,7 @@ const HotelCard = ({ variant }: THotelCard) => {
           />
           <div className="py-1">
             <div className="flex items-center justify-between gap-4">
-              <h3 className="text-sm font-bold text-text-black">
-                The Aston Hotel
-              </h3>
+              <h3 className="text-sm font-bold text-text-black">{data.name}</h3>
               <p className="text-xs font-medium text-primary-grey">
                 <span className="text-sm font-bold text-secondary-blue">
                   $165,3
@@ -61,7 +59,7 @@ const HotelCard = ({ variant }: THotelCard) => {
               </p>
             </div>
             <p className="mt-2 text-xs font-medium text-primary-grey">
-              Alice Springs NT0870, Australia
+              {data.address}, {data.location}
             </p>
             <div className="mt-2 flex items-center gap-2">
               <img src="star.svg" alt="Star" />

@@ -15,7 +15,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/profile">
+            <Link to="/profile/1">
               <button className="hover:underline hover:underline-offset-2">
                 Profile
               </button>

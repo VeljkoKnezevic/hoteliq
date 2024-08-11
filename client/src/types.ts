@@ -6,3 +6,10 @@ export type ProfileInfo = {
   email: string;
   password: string;
 };
+
+export type THotel = {
+  id: number;
+  name: string;
+  address: string;
+  location: string;
+};

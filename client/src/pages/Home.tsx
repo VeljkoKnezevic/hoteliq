@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import HotelCard from "../components/HotelCard";
 import Header from "../components/Header";
@@ -7,6 +7,8 @@ import Slider from "react-slick";
 // Import css files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useQuery } from "@tanstack/react-query";
+import { THotel } from "../types";
 
 const Home = () => {
   //Locations need to be fetched from the backend location list of hotels
@@ -20,10 +22,12 @@ const Home = () => {
     speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
+    swipe: false,
     responsive: [
       {
         breakpoint: 1279,
         settings: {
+          swipe: true,
           slidesToShow: 2,
         },
       },
@@ -31,11 +35,26 @@ const Home = () => {
         breakpoint: 767,
         settings: {
           arrows: false,
+          swipe: true,
           slidesToShow: 1,
         },
       },
     ],
   };
+
+  const fetchData = async () => {
+    const response = await fetch("http://localhost:8080/hotels", {
+      headers: {
+        "Allow-Access-Control-Origin": "http://localhost:5173/",
+      },
+    });
+    return await response.json();
+  };
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["hotels"],
+    queryFn: fetchData,
+  });
 
   return (
     <>
@@ -83,15 +102,14 @@ const Home = () => {
             </button>
           </div>
           <Slider className="mt-6" {...settings}>
-            <div>
-              <HotelCard variant="nearby" />
-            </div>
-            <div>
-              <HotelCard variant="nearby" />
-            </div>
-            <div>
-              <HotelCard variant="nearby" />
-            </div>
+            {data &&
+              data.map((hotel: THotel) => {
+                return (
+                  <div key={hotel.id}>
+                    <HotelCard data={hotel} variant="nearby" />
+                  </div>
+                );
+              })}
           </Slider>
         </section>
 
@@ -105,12 +123,12 @@ const Home = () => {
             </button>
           </div>
           <div className="mt-6 flex flex-col gap-2 pb-5 md:grid md:grid-cols-2 xl:grid-cols-3 xl:pb-10">
-            <HotelCard variant="popular" />
-            <HotelCard variant="popular" />
-            <HotelCard variant="popular" />
-            <HotelCard variant="popular" />
-            <HotelCard variant="popular" />
-            <HotelCard variant="popular" />
+            {data &&
+              data.map((hotel: THotel) => {
+                return (
+                  <HotelCard key={hotel.id} data={hotel} variant="popular" />
+                );
+              })}
           </div>
         </section>
       </main>
