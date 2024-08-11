@@ -7,6 +7,8 @@ import com.veljkoknezevic.server.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/hotels")
 public class HotelController {
@@ -18,6 +20,13 @@ public class HotelController {
     public HotelController(RoomService roomService, HotelService hotelService) {
         this.roomService = roomService;
         this.hotelService = hotelService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Hotel>> getHotels() {
+        List<Hotel> hotels = hotelService.findHotels();
+
+        return ResponseEntity.ok(hotels);
     }
 
     @GetMapping("/{id}")

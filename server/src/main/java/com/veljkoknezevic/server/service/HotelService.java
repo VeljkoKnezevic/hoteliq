@@ -5,6 +5,8 @@ import com.veljkoknezevic.server.repository.HotelRepository;
 import com.veljkoknezevic.server.exception.HotelNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +16,14 @@ public class HotelService {
 
     public HotelService(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
+    }
+
+    public List<Hotel> findHotels() {
+        Iterable<Hotel> hotels = hotelRepository.findAll();
+        List<Hotel> result = new ArrayList<>();
+
+        hotels.forEach(result::add);
+        return result;
     }
 
 

@@ -40,17 +40,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .oauth2ResourceServer(oauth -> oauth.jwt(c -> c.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .oauth2ResourceServer(oauth -> oauth.jwt(c -> c.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(c -> c
-                        .requestMatchers("/auth/**").permitAll()
-                        // /hotels/** refers to both the hotel and room endpoints of that http method
-                        .requestMatchers(HttpMethod.GET, "/hotels/**").hasAnyRole("GUEST","STAFF")
-                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/reservations/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
+//                        .requestMatchers("/auth/**").permitAll()
+//                        // /hotels/** refers to both the hotel and room endpoints of that http method
+//                        .requestMatchers(HttpMethod.GET, "/hotels/**").hasAnyRole("GUEST","STAFF")
+//                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").hasRole("STAFF")
+////                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/reservations/**").hasRole("STAFF")
+//                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
+//                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
+//                        .anyRequest().authenticated())
                 .build();
     }
 
