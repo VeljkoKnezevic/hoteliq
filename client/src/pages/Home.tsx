@@ -14,6 +14,7 @@ const Home = () => {
   //Locations need to be fetched from the backend location list of hotels
   const [location, setLocation] = useState<string>("Spain");
   const [search, setSearch] = useState<string>("");
+  const [isSwiping, setIsSwiping] = useState(false);
 
   const settings = {
     dots: true,
@@ -22,12 +23,12 @@ const Home = () => {
     speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
-    swipe: false,
+    beforeChange: () => setIsSwiping(true),
+    afterChange: () => setIsSwiping(false),
     responsive: [
       {
         breakpoint: 1279,
         settings: {
-          swipe: true,
           slidesToShow: 2,
         },
       },
@@ -35,7 +36,6 @@ const Home = () => {
         breakpoint: 767,
         settings: {
           arrows: false,
-          swipe: true,
           slidesToShow: 1,
         },
       },
@@ -55,6 +55,15 @@ const Home = () => {
     queryKey: ["hotels"],
     queryFn: fetchData,
   });
+
+  // Disables clicking when the cards are swiping,
+  // and enables it when stopped
+  const handleSwiping = (e: React.MouseEvent<HTMLElement>) => {
+    if (isSwiping) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -106,7 +115,11 @@ const Home = () => {
               data.map((hotel: THotel) => {
                 return (
                   <div key={hotel.id}>
-                    <HotelCard data={hotel} variant="nearby" />
+                    <HotelCard
+                      handleSwiping={handleSwiping}
+                      data={hotel}
+                      variant="nearby"
+                    />
                   </div>
                 );
               })}
