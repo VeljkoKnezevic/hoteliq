@@ -153,6 +153,11 @@ const Details = () => {
               { src: `/${data.location}-3.png` },
             ]}
           />
+          <div className="flex w-full md:justify-center">
+            <button className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6 md:w-1/2 md:text-base lg:mt-8 xl:mt-10 xl:py-6">
+              Book now
+            </button>
+          </div>
         </main>
       )}
       <Footer />
