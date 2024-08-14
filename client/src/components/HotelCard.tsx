@@ -5,15 +5,9 @@ type THotelCard = {
   variant: HotelCardVariants;
   data: THotel;
   handleSwiping?: (e: React.MouseEvent<HTMLElement>) => void;
-  getNumbers: (id: number, min: number, max: number) => string;
 };
 
-const HotelCard = ({
-  variant,
-  data,
-  handleSwiping,
-  getNumbers,
-}: THotelCard) => {
+const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
   if (variant == "nearby") {
     return (
       <Link to={`/details/${data.id}`}>
@@ -35,9 +29,7 @@ const HotelCard = ({
                 <div className="flex items-end gap-2">
                   <img src="star.svg" alt="Star" />
                   <p className="text-sm font-bold text-text-black">
-                    {Number(getNumbers(data.id, 3, 5)) > 5
-                      ? "5.0"
-                      : getNumbers(data.id, 3.5, 5)}
+                    {data.rating}
                   </p>
                 </div>
               </div>
@@ -47,7 +39,7 @@ const HotelCard = ({
                 </p>
                 <p className="mt-2 text-xs font-medium text-primary-grey">
                   <span className="text-sm font-bold text-secondary-blue">
-                    ${getNumbers(data.id, 150, 450)}
+                    ${data.price}
                   </span>
                   /night
                 </p>
@@ -76,7 +68,7 @@ const HotelCard = ({
                 </h3>
                 <p className="text-xs font-medium text-primary-grey">
                   <span className="text-sm font-bold text-secondary-blue">
-                    ${getNumbers(data.id, 150, 450)}
+                    ${data.price}
                   </span>
                   /night
                 </p>
@@ -87,9 +79,7 @@ const HotelCard = ({
               <div className="mt-2 flex items-center gap-2">
                 <img src="star.svg" alt="Star" />
                 <p className="text-sm font-bold text-text-black">
-                  {Number(getNumbers(data.id, 3, 5)) > 5
-                    ? "5.0"
-                    : getNumbers(data.id, 3.5, 5)}
+                  {data.rating}
                 </p>
               </div>
             </div>

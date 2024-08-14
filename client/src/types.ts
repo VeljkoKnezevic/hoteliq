@@ -12,4 +12,6 @@ export type THotel = {
   name: string;
   address: string;
   location: string;
+  rating: number;
+  price: string;
 };

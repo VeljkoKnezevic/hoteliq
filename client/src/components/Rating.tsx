@@ -1,4 +1,8 @@
-const Rating = () => {
+type TRating = {
+  stars: number;
+};
+
+const Rating = ({ stars }: TRating) => {
   return (
     <section className="mt-2 flex justify-around md:mt-4">
       <div className=" flex items-center gap-2">
@@ -13,7 +17,7 @@ const Rating = () => {
       </div>
       <div className=" flex items-center gap-2">
         <img src="/star.svg" alt="Star" />
-        <span className="text-sm font-bold text-text-black">5.0</span>
+        <span className="text-sm font-bold text-text-black">{stars}</span>
       </div>
     </section>
   );
