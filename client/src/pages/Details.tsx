@@ -35,6 +35,26 @@ const Details = () => {
     queryFn: fetchHotelById,
   });
 
+  if (error) {
+    return (
+      <>
+        <Header />
+        <p className="mx-6 mt-5 text-2xl md:mx-10">Error fetching data</p>
+        <Footer />
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <p className="mx-6 mt-5 text-2xl md:mx-10">Loading...</p>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
