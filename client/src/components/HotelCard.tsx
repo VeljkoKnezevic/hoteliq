@@ -52,7 +52,7 @@ const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
   } else {
     // popular
     return (
-      <Link to={"/details/1"} className="w-fit">
+      <Link to={`/details/${data.id}`} className="w-fit">
         {data && (
           <section className="flex gap-4 p-3 text-start">
             <img

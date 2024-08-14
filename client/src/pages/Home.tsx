@@ -57,7 +57,7 @@ const Home = () => {
   });
 
   // Disables clicking when the cards are swiping,
-  // and enables it when stopped
+  // and enables it when swiping is stopped
   const handleSwiping = (e: React.MouseEvent<HTMLElement>) => {
     if (isSwiping) {
       e.stopPropagation();
@@ -114,7 +114,7 @@ const Home = () => {
             {data &&
               data
                 .filter((hotel) => hotel.location == location)
-                .map((hotel: THotel) => {
+                .map((hotel) => {
                   return (
                     <div key={hotel.id}>
                       <HotelCard
@@ -139,7 +139,7 @@ const Home = () => {
           </div>
           <div className="mt-6 flex flex-col gap-2 pb-5 md:grid md:grid-cols-2 xl:grid-cols-3 xl:pb-10">
             {data &&
-              data.map((hotel: THotel) => {
+              data.slice(0, 6).map((hotel: THotel) => {
                 return (
                   <HotelCard key={hotel.id} data={hotel} variant="popular" />
                 );
