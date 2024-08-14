@@ -5,21 +5,18 @@ type THotelCard = {
   variant: HotelCardVariants;
   data: THotel;
   handleSwiping?: (e: React.MouseEvent<HTMLElement>) => void;
+  getNumbers: (id: number, min: number, max: number) => string;
 };
 
-const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
-  // Generates price and hotel rating based on id
-  function getNumbers(id: number, min: number, max: number) {
-    const range = max - min;
-
-    return Number(min + (range * Math.log(id + 1)) / Math.log(40))
-      .toFixed(1)
-      .replace(/(\.0+|0+)$/, "");
-  }
-
+const HotelCard = ({
+  variant,
+  data,
+  handleSwiping,
+  getNumbers,
+}: THotelCard) => {
   if (variant == "nearby") {
     return (
-      <Link to={"/details/1"}>
+      <Link to={`/details/${data.id}`}>
         {data && (
           <section
             onClick={handleSwiping}

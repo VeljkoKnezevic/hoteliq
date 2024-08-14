@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Rating from "../components/Rating";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { THotel } from "../types";
 
 const Details = () => {
   const [readMore, setReadMore] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
+
+  const { id } = useParams();
 
   const handleLightboxClick = (imgIndex: number) => {
     // Opens the lightbox with the correct image
@@ -16,9 +21,24 @@ const Details = () => {
     setIndex(imgIndex);
   };
 
+  const fetchHotelById = async () => {
+    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
+      headers: {
+        "Allow-Access-Control-Origin": "http://localhost:5173/",
+      },
+    });
+    return await response.json();
+  };
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["hotel"],
+    queryFn: fetchHotelById,
+  });
+
   return (
     <>
       <Header />
+
       <main className="m-6 md:m-10 lg:m-14 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
         <img
           className="mx-auto w-full rounded-md lg:aspect-video lg:w-9/12"
@@ -28,7 +48,7 @@ const Details = () => {
         <Rating />
         <div className="mt-4 flex justify-between lg:mt-6">
           <h3 className="text-base font-bold text-text-black md:text-lg lg:text-xl xl:text-2xl">
-            The Aston Vill hotel
+            {data && data.name}
           </h3>
           <p className="text-sm font-medium text-primary-grey">
             <span className="text-base text-secondary-blue">$200,7</span>/night

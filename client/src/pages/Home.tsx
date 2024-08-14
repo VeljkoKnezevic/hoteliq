@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 import HotelCard from "../components/HotelCard";
 import Header from "../components/Header";
@@ -10,7 +10,11 @@ import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "@tanstack/react-query";
 import { THotel } from "../types";
 
-const Home = () => {
+type THome = {
+  getNumbers: (id: number, min: number, max: number) => string;
+};
+
+const Home = ({ getNumbers }: THome) => {
   //Locations need to be fetched from the backend location list of hotels
   const [location, setLocation] = useState<string>("Spain");
   const [search, setSearch] = useState<string>("");
@@ -116,6 +120,7 @@ const Home = () => {
                 return (
                   <div key={hotel.id}>
                     <HotelCard
+                      getNumbers={getNumbers}
                       handleSwiping={handleSwiping}
                       data={hotel}
                       variant="nearby"
@@ -139,7 +144,12 @@ const Home = () => {
             {data &&
               data.map((hotel: THotel) => {
                 return (
-                  <HotelCard key={hotel.id} data={hotel} variant="popular" />
+                  <HotelCard
+                    key={hotel.id}
+                    getNumbers={getNumbers}
+                    data={hotel}
+                    variant="popular"
+                  />
                 );
               })}
           </div>
