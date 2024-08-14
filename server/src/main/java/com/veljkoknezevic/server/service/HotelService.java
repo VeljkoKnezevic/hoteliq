@@ -48,9 +48,11 @@ public class HotelService {
         if(optionalHotel.isPresent()) {
             dbHotel = optionalHotel.get();
 
-            dbHotel.setName(hotel.getName());
-            dbHotel.setAddress(hotel.getAddress());
-            dbHotel.setLocation(hotel.getLocation());
+            dbHotel.setName(hotel.getName() == null ? dbHotel.getName() : hotel.getName());
+            dbHotel.setAddress(hotel.getAddress() == null ? dbHotel.getAddress() : hotel.getAddress());
+            dbHotel.setLocation(hotel.getLocation() == null ? dbHotel.getLocation() : hotel.getLocation());
+            dbHotel.setPrice(hotel.getPrice() == null ? dbHotel.getPrice() : hotel.getPrice());
+            dbHotel.setRating(hotel.getRating() == null ? dbHotel.getRating() : hotel.getRating());
 
             return hotelRepository.save(dbHotel);
         } else {

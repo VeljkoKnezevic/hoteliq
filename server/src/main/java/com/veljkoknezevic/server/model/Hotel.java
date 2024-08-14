@@ -72,28 +72,15 @@ public class Hotel {
         return rating;
     }
 
-    public void setRating() {
-        Random random = new Random();
-
-        double min = 1.0;
-        double max = 5.0;
-
-        double randomDouble = min + (max - min) * random.nextDouble();
-
-        this.rating = Math.round(randomDouble * 10.0) / 10.0;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice() {
-        Random random = new Random();
-        double min = 80.0;
-        double max = 200.0;
-        double randomDouble = min + (max - min) * random.nextDouble();
-        double roundedDouble = Math.round(randomDouble * 10.0) / 10.0;
-
-        this.price = (roundedDouble % 1 == 0) ? String.format("%.0f", roundedDouble): String.format("%.1f", roundedDouble);
+    public void setPrice(String price) {
+       this.price = price;
     }
 }
