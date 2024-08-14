@@ -51,7 +51,7 @@ const Home = () => {
     return await response.json();
   };
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data } = useQuery<THotel[]>({
     queryKey: ["hotels"],
     queryFn: fetchData,
   });
@@ -112,17 +112,19 @@ const Home = () => {
           </div>
           <Slider className="mt-6" {...settings}>
             {data &&
-              data.map((hotel: THotel) => {
-                return (
-                  <div key={hotel.id}>
-                    <HotelCard
-                      handleSwiping={handleSwiping}
-                      data={hotel}
-                      variant="nearby"
-                    />
-                  </div>
-                );
-              })}
+              data
+                .filter((hotel) => hotel.location == location)
+                .map((hotel: THotel) => {
+                  return (
+                    <div key={hotel.id}>
+                      <HotelCard
+                        handleSwiping={handleSwiping}
+                        data={hotel}
+                        variant="nearby"
+                      />
+                    </div>
+                  );
+                })}
           </Slider>
         </section>
 

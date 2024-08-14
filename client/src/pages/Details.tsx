@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Rating from "../components/Rating";
@@ -30,7 +30,7 @@ const Details = () => {
     return await response.json();
   };
 
-  const { data } = useQuery<THotel>({
+  const { isLoading, error, data } = useQuery<THotel>({
     queryKey: ["hotel"],
     queryFn: fetchHotelById,
   });
