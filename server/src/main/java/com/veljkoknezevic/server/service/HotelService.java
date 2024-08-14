@@ -61,4 +61,7 @@ public class HotelService {
     public void deleteHotel(int id) {
         hotelRepository.deleteById(id);
     }
+
+
+
 }
