@@ -1,20 +1,21 @@
 import { useState } from "react";
 
-import HotelCard from "../components/HotelCard";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Slider from "react-slick";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import HotelCard from "../components/HotelCard";
 // Import css files
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "@tanstack/react-query";
+import Popup from "reactjs-popup";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import { THotel } from "../types";
 
 const Home = () => {
   //Locations need to be fetched from the backend location list of hotels
   const [location, setLocation] = useState<string>("Spain");
   const [search, setSearch] = useState<string>("");
-  const [isSwiping, setIsSwiping] = useState(false);
+  const [isSwiping, setIsSwiping] = useState<boolean>(false);
 
   const settings = {
     dots: true,
@@ -86,7 +87,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <div>
       <Header />
       <main className="mx-6 md:mx-10 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
         <form className="mt-6 xl:mt-10">
@@ -113,22 +114,55 @@ const Home = () => {
             </div>
           </div>
 
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            type="text"
-            className="mt-5 w-full rounded-lg border-2 border-secondary-grey bg-[url('/search.svg')] bg-[center_left_0.5rem] bg-no-repeat py-3 pl-8 text-sm font-medium xl:mt-6"
-            placeholder="Search Hotel"
-          />
+          <Popup
+            trigger={
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                className="mt-5 w-full cursor-pointer rounded-lg border-2 border-secondary-grey bg-[url('/search.svg')] bg-[center_left_0.5rem] bg-no-repeat py-3 pl-8 text-sm font-medium xl:mt-6"
+                placeholder="Search Hotel"
+              />
+            }
+            modal
+            onClose={() => {
+              setSearch("");
+            }}
+            closeOnDocumentClick
+          >
+            <section>
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                className=" mb-5 mt-5 w-full rounded-lg border-2 border-secondary-grey bg-[url('/search.svg')] bg-[center_left_0.5rem] bg-no-repeat py-3 pl-8 text-sm font-medium xl:mt-6"
+                placeholder="Search Hotel"
+              />
+              <div>
+                {data &&
+                  data
+                    .filter((hotel) =>
+                      hotel.name.toLowerCase().includes(search.toLowerCase())
+                    )
+                    .map((hotel) => {
+                      return (
+                        <div
+                          className="mb-2 rounded-lg border-2 border-secondary-grey hover:border-secondary-blue hover:bg-secondary-grey"
+                          key={hotel.id}
+                        >
+                          <HotelCard data={hotel} variant="popular" />
+                        </div>
+                      );
+                    })}
+              </div>
+            </section>
+          </Popup>
         </form>
         <section>
           <div className="mt-6 flex justify-between xl:mt-8">
             <h2 className="text-base font-bold text-text-black md:text-lg xl:text-xl">
               Nearby your location
             </h2>
-            <button className="text-sm font-medium text-secondary-blue lg:text-base">
-              See all
-            </button>
           </div>
           <Slider className="mt-6" {...settings}>
             {data &&
@@ -153,9 +187,6 @@ const Home = () => {
             <h2 className="text-base font-bold text-text-black md:text-lg xl:text-xl">
               Popular Destination
             </h2>
-            <button className="text-sm font-medium text-secondary-blue lg:text-base">
-              See all
-            </button>
           </div>
           <div className="mt-6 flex flex-col gap-2 pb-5 md:grid md:grid-cols-2 xl:grid-cols-3 xl:pb-10">
             {data &&
@@ -168,7 +199,7 @@ const Home = () => {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
