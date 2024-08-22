@@ -7,6 +7,13 @@ export type ProfileInfo = {
   email: string;
 };
 
+export type TRegister = {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+};
+
 export type THotel = {
   id: number;
   name: string;
