@@ -7,7 +7,6 @@ const Profile = () => {
     firstName: "Veljko",
     lastName: "Knezevic",
     email: "veljkoBitno@gmail.com",
-    password: "password",
   });
 
   // Used to updated based on when
@@ -26,7 +25,6 @@ const Profile = () => {
       firstName: updated.firstName,
       lastName: updated.lastName,
       email: updated.email,
-      password: updated.password,
     }));
 
     setEditing(false);
@@ -109,24 +107,6 @@ const Profile = () => {
             type="text"
             id="email"
             name="email"
-          />
-
-          <label
-            className="mt-2 text-base font-medium text-secondary-blue"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className="mt-1 rounded border border-primary-blue p-2 text-sm font-medium text-text-black"
-            value={editing ? updated.password : info.password}
-            disabled={!editing}
-            onChange={(e) =>
-              setUpdated((prev) => ({ ...prev, password: e.target.value }))
-            }
-            type="password"
-            id="password"
-            name="password"
           />
 
           {editing && (
