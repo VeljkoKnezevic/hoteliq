@@ -142,7 +142,7 @@ const Home = () => {
                 {data &&
                   data
                     .filter((hotel) =>
-                      hotel.name.toLowerCase().includes(search.toLowerCase())
+                      hotel.name?.toLowerCase().includes(search.toLowerCase())
                     )
                     .map((hotel) => {
                       return (

@@ -1,44 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { TRegister } from "../types";
-import { useState } from "react";
 
 const Login = () => {
-  const [login, setLogin] = useState<TRegister>({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setLogin({ ...login, [name]: value });
-  };
-
-  const handleLogin = async () => {
-    const response = await fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      headers: {
-        "Allow-Access-Control-Origin": "http://localhost:5173/",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(login),
-    });
-    return await response.json();
-  };
-
-  const mutation = useMutation({
-    mutationFn: handleLogin,
-    onSuccess: (res) => {
-      console.log(res);
-    },
-  });
-
-  const onSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    mutation.mutate();
-  };
-
   return (
     <>
       <Link to="/">
@@ -49,7 +11,7 @@ const Login = () => {
       <main className="mx-6 mt-10 rounded-md border-2 border-primary-blue p-3 md:mx-10 lg:mx-auto lg:max-w-[800px] xl:max-w-[1000px]">
         <h2 className="text-lg font-bold text-text-black">Login</h2>
 
-        <form onSubmit={onSubmit} className={`mt-4 grid`}>
+        <form className={`mt-4 grid`}>
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
             htmlFor="email"
@@ -61,8 +23,6 @@ const Login = () => {
             type="text"
             id="email"
             name="email"
-            value={login.email}
-            onChange={handleChange}
           />
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
@@ -75,8 +35,6 @@ const Login = () => {
             type="password"
             id="password"
             name="password"
-            value={login.password}
-            onChange={handleChange}
           />
           <div className="flex flex-col gap-5">
             <button
