@@ -1,6 +1,22 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../components/AuthContext";
+import { useState } from "react";
+import { TRegister } from "../types";
 
 const Register = () => {
+  const { register } = useAuth();
+
+  const [user, setUser] = useState<TRegister>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleRegister = () => {
+    // logic
+  };
+
   return (
     <>
       <Link to="/">
