@@ -1,16 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../components/AuthContext";
-import { useState } from "react";
-import { TRegister } from "../types";
 
 const Login = () => {
-  const { login } = useAuth();
-
-  const [user, setUser] = useState<TRegister>({
-    email: "",
-    password: "",
-  });
-
   const handleLogin = () => {
     // Implement login logic
     // login({ username, password });

@@ -1,22 +1,7 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../components/AuthContext";
-import { useState } from "react";
-import { TRegister } from "../types";
+import { ChangeEvent, useState } from "react";
 
 const Register = () => {
-  const { register } = useAuth();
-
-  const [user, setUser] = useState<TRegister>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-
-  const handleRegister = () => {
-    // logic
-  };
-
   return (
     <>
       <Link to="/">
@@ -39,7 +24,7 @@ const Register = () => {
             type="text"
             id="firstName"
             name="firstName"
-          />{" "}
+          />
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
             htmlFor="lastName"

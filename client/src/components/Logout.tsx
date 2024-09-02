@@ -1,14 +1,5 @@
-import React from "react";
-import { useAuth } from "./AuthContext";
-
 const Logout = () => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    // Logic
-
-    logout();
-  };
+  const handleLogout = () => {};
 
   return (
     <div>
