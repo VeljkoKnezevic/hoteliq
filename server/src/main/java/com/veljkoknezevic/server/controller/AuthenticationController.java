@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("*")
+@CrossOrigin
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -20,7 +20,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Guest> register(@RequestBody RegistrationDTO dto) {
-        Guest registered = authenticationService.registerUser(dto.email(), dto.password());
+        Guest registered = authenticationService.registerUser(dto.firstName(), dto.lastName(), dto.email(), dto.password());
 
         return ResponseEntity.ok(registered);
     }

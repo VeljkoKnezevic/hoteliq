@@ -1,5 +1,5 @@
 package com.veljkoknezevic.server.dto;
 
-public record RegistrationDTO(String email, String password){
+public record RegistrationDTO(String firstName, String lastName, String email, String password){
 
 }

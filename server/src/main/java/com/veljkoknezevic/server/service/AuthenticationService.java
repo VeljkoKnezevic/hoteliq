@@ -42,7 +42,7 @@ public class AuthenticationService {
         this.tokenService = tokenService;
     }
 
-    public Guest registerUser(String email, String password) {
+    public Guest registerUser(String firstName, String lastName, String email, String password) {
 
         String encoded = passwordEncoder.encode(password);
 
@@ -53,7 +53,7 @@ public class AuthenticationService {
 
         authorities.add(userRole);
 
-        return guestRepository.save(new Guest(email , encoded, authorities));
+        return guestRepository.save(new Guest(firstName, lastName,email , encoded, authorities));
     }
 
     public LoginResponseDTO loginUser(String email, String password) {

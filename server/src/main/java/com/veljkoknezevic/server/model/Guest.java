@@ -47,6 +47,14 @@ public class Guest implements UserDetails {
         this.authorities = authorities;
     }
 
+    public Guest(String firstName, String lastName, String email, String password, Set<Role> authorities) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     public Guest(int id, String firstName, String lastName, String email, String password, Set<Role> authorities, Reservation reservation) {
         this.id = id;
         this.firstName = firstName;
@@ -56,6 +64,8 @@ public class Guest implements UserDetails {
         this.authorities = authorities;
         this.reservation = reservation;
     }
+
+
 
     public int getId() {
         return id;
