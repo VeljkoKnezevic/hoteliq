@@ -14,6 +14,30 @@ export type TRegister = {
   password: string;
 };
 
+export type LoginResponse = {
+  guest: {
+    id: number;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    reservation?: string;
+    authorities: [
+      {
+        id: number;
+        authority: string;
+      },
+    ];
+  };
+  jwt: string;
+};
+
+export type TParsedToken = {
+  iat: number;
+  iss: string;
+  roles: string;
+  sub: string;
+};
+
 export type THotel = {
   id: number;
   name: string;

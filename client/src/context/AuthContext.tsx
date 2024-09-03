@@ -5,36 +5,37 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { LoginResponse, TParsedToken, TRegister } from "../types";
 
-type User = {
-  data: {
-    exp: number;
-  };
-};
+// type User = {
+//   data: {
+//     exp: number;
+//   };
+// };
 
 type AuthContextType = {
-  user: User | null;
-  getUser: () => User | null;
+  user: LoginResponse | null;
+  getUser: () => TRegister | null;
   userIsAuthenticated: () => boolean;
-  userLogin: (user: User) => void;
+  userLogin: (user: LoginResponse, token: TParsedToken) => void;
   userLogout: () => void;
+};
+
+type AuthProviderProps = {
+  children: ReactNode;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<LoginResponse | null>(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     setUser(storedUser);
   }, []);
 
-  const getUser = (): User | null => {
+  const getUser = (): TRegister | null => {
     return JSON.parse(localStorage.getItem("user") || "null");
   };
 
@@ -46,15 +47,17 @@ function AuthProvider({ children }: AuthProviderProps) {
     storedUser = JSON.parse(storedUser);
 
     // if user has token expired, logout user
-    if (Date.now() > storedUser?.data.exp * 1000) {
-      userLogout();
-      return false;
-    }
+    // if (Date.now() > storedUser?.data.exp * 1000) {
+    //   userLogout();
+    //   return false;
+    // }
     return true;
   };
 
-  const userLogin = (user: User): void => {
-    localStorage.setItem("user", JSON.stringify(user));
+  const userLogin = (user: LoginResponse, token: TParsedToken): void => {
+    const toStore = { user, token };
+
+    localStorage.setItem("user", JSON.stringify(toStore));
     setUser(user);
   };
 
