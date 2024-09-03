@@ -1,9 +1,8 @@
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
+import { handleInputChange, parseToken } from "../misc/Helpers";
 import { LoginResponse, TParsedToken, TRegister } from "../types";
-import { parseToken, handleInputChange } from "../misc/Helpers";
-import { enqueueSnackbar } from "notistack";
 
 const Login = () => {
   const { userIsAuthenticated, userLogin } = useAuth();
@@ -12,8 +11,6 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState<boolean>(false);
-
-  const { state } = useLocation();
 
   const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();

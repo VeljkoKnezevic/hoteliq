@@ -1,4 +1,5 @@
 export type HotelCardVariants = "nearby" | "popular";
+export type Authorities = "GUEST" | "STAFF";
 
 export type ProfileInfo = {
   id?: number;
@@ -29,6 +30,25 @@ export type LoginResponse = {
     ];
   };
   jwt: string;
+};
+
+export type localStorageUser = {
+  user: {
+    guest: {
+      id: number;
+      email: string;
+      firstName?: string;
+      lastName?: string;
+      reservation?: string;
+      authorities: [
+        {
+          id: number;
+          authority: string;
+        },
+      ];
+    };
+    jwt: string;
+  };
 };
 
 export type TParsedToken = {

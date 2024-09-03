@@ -1,14 +1,10 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { TRegister } from "../types";
+import { Link, useNavigate } from "react-router-dom";
 import { handleInputChange } from "../misc/Helpers";
+import { TRegister } from "../types";
 
 const Register = () => {
-  const { userIsAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-  const isLoggedIn = userIsAuthenticated();
 
   const [user, setUser] = useState<TRegister>({
     firstName: "",
@@ -29,15 +25,13 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/auth/register", {
+      await fetch("http://localhost:8080/auth/register", {
         method: "POST",
         body: JSON.stringify({ email, password, firstName, lastName }),
         headers: {
           "Content-type": "application/json",
         },
       });
-
-      const data = await response.json();
 
       setUser({
         firstName: "",

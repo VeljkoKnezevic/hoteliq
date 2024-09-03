@@ -5,17 +5,11 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { LoginResponse, TParsedToken, TRegister } from "../types";
-
-// type User = {
-//   data: {
-//     exp: number;
-//   };
-// };
+import { LoginResponse, TParsedToken, localStorageUser } from "../types";
 
 type AuthContextType = {
   user: LoginResponse | null;
-  getUser: () => TRegister | null;
+  getUser: () => localStorageUser | null;
   userIsAuthenticated: () => boolean;
   userLogin: (user: LoginResponse, token: TParsedToken) => void;
   userLogout: () => void;
@@ -35,7 +29,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     setUser(storedUser);
   }, []);
 
-  const getUser = (): TRegister | null => {
+  const getUser = (): localStorageUser | null => {
     return JSON.parse(localStorage.getItem("user") || "null");
   };
 
@@ -46,11 +40,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
     storedUser = JSON.parse(storedUser);
 
-    // if user has token expired, logout user
-    // if (Date.now() > storedUser?.data.exp * 1000) {
-    //   userLogout();
-    //   return false;
-    // }
     return true;
   };
 

@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./context/AuthContext";
 import { SnackbarProvider } from "notistack";
+import Staff from "./pages/Staff";
+import PrivateRoute from "./misc/PrivateRoute";
 
 const queryClient = new QueryClient();
 
@@ -20,9 +22,22 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/details/:id" element={<Details />} />
-              <Route path="/profile/:id" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route
+                path="/profile/:id"
+                element={
+                  <PrivateRoute
+                    element={<Profile />}
+                    roles={["STAFF", "GUEST"]}
+                  />
+                }
+              />
+
+              <Route
+                path="/staff"
+                element={<PrivateRoute element={<Staff />} roles={["STAFF"]} />}
+              />
             </Routes>
           </Router>
         </AuthProvider>
