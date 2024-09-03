@@ -1,8 +1,9 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginResponse, TParsedToken, TRegister } from "../types";
-import { parseToken } from "../misc/Helpers";
+import { parseToken, handleInputChange } from "../misc/Helpers";
+import { enqueueSnackbar } from "notistack";
 
 const Login = () => {
   const { userIsAuthenticated, userLogin } = useAuth();
@@ -12,18 +13,14 @@ const Login = () => {
   });
   const [error, setError] = useState<boolean>(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-
-    setUser((prev) => ({ ...prev, [name]: value }));
-  };
+  const { state } = useLocation();
 
   const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const { email, password } = user;
 
-    if (email === "" && password === "") {
+    if (!email || !password) {
       setError(true);
       return;
     }
@@ -78,7 +75,7 @@ const Login = () => {
             type="text"
             id="email"
             name="email"
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange(e, setUser)}
             value={user.email}
           />
           <label
@@ -92,7 +89,7 @@ const Login = () => {
             type="password"
             id="password"
             name="password"
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange(e, setUser)}
             value={user.password}
           />
           <div className="flex flex-col gap-5">

@@ -5,3 +5,12 @@ export function parseToken(token: string) {
   const base64 = base64Url.replace("-", "+").replace("_", "/");
   return JSON.parse(window.atob(base64));
 }
+
+export const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  updateFunction: any
+): void => {
+  const { name, value } = e.target;
+
+  updateFunction((prev: any) => ({ ...prev, [name]: value }));
+};

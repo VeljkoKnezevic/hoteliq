@@ -1,7 +1,59 @@
-import { Link } from "react-router-dom";
-import { ChangeEvent, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { TRegister } from "../types";
+import { handleInputChange } from "../misc/Helpers";
 
 const Register = () => {
+  const { userIsAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const isLoggedIn = userIsAuthenticated();
+
+  const [user, setUser] = useState<TRegister>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState(false);
+
+  const handleRegister = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    const { firstName, lastName, email, password } = user;
+
+    if (!email || !password || !firstName || !lastName) {
+      setError(true);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, password, firstName, lastName }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      setUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+      setError(false);
+
+      navigate("/login");
+    } catch (err) {
+      setError(true);
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Link to="/">
@@ -12,7 +64,7 @@ const Register = () => {
       <main className="mx-6 mt-10 rounded-md border-2 border-primary-blue p-3 md:mx-10 lg:mx-auto lg:max-w-[800px] xl:max-w-[1000px]">
         <h2 className="text-lg font-bold text-text-black">Register</h2>
 
-        <form className={`mt-4 grid`}>
+        <form onSubmit={handleRegister} className={`mt-4 grid`}>
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
             htmlFor="firstName"
@@ -24,6 +76,8 @@ const Register = () => {
             type="text"
             id="firstName"
             name="firstName"
+            value={user.firstName}
+            onChange={(e) => handleInputChange(e, setUser)}
           />
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
@@ -36,6 +90,8 @@ const Register = () => {
             type="text"
             id="lastName"
             name="lastName"
+            value={user.lastName}
+            onChange={(e) => handleInputChange(e, setUser)}
           />
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
@@ -48,6 +104,8 @@ const Register = () => {
             type="text"
             id="email"
             name="email"
+            value={user.email}
+            onChange={(e) => handleInputChange(e, setUser)}
           />
           <label
             className="mt-2 text-base font-medium text-secondary-blue"
@@ -60,6 +118,8 @@ const Register = () => {
             type="password"
             id="password"
             name="password"
+            value={user.password}
+            onChange={(e) => handleInputChange(e, setUser)}
           />
           <div className="flex flex-col gap-5">
             <button
@@ -76,6 +136,7 @@ const Register = () => {
             </span>
           </div>
         </form>
+        {error && <p>Please fill all the fields</p>}
       </main>
     </>
   );
