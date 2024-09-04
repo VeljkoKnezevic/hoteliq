@@ -49,8 +49,7 @@ const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
         )}
       </Link>
     );
-  } else {
-    // popular
+  } else if (variant === "popular") {
     return (
       <Link to={`/details/${data.id}`} className="w-fit">
         {data && (

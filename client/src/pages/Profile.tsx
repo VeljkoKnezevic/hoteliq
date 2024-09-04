@@ -17,7 +17,7 @@ const Profile = () => {
   // When set to true input info can be changed
   const [editing, setEditing] = useState<boolean>(false);
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     setInfo((prev) => ({

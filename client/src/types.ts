@@ -1,4 +1,4 @@
-export type HotelCardVariants = "nearby" | "popular";
+export type HotelCardVariants = "nearby" | "popular" | "staff";
 export type Authorities = "GUEST" | "STAFF";
 
 export type ProfileInfo = {
