@@ -7,14 +7,17 @@ import com.veljkoknezevic.server.model.Role;
 import com.veljkoknezevic.server.repository.GuestRepository;
 import com.veljkoknezevic.server.repository.RoleRepository;
 import com.veljkoknezevic.server.security.CustomAuthenticationProvider;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.token.TokenService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -75,4 +78,4 @@ public class AuthenticationService {
 
         return null;
     }
-}
+ }
