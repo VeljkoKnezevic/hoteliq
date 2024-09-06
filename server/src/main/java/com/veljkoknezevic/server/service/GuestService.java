@@ -25,4 +25,7 @@ public class GuestService {
         allGuests.forEach(result::add);
         return result;
     }
+    public void deleteGuest(int id) {
+        guestRepository.deleteById(id);
+    }
 }

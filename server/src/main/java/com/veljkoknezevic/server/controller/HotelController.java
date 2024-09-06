@@ -71,7 +71,7 @@ public class HotelController {
     public ResponseEntity<Room> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
         Room response = roomService.addRoom(room, hotelId);
 
-        return ResponseEntity.ok(room);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{hotelId}/rooms/{roomId}")

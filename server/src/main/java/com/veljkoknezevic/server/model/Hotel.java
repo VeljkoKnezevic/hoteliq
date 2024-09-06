@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class Hotel {
     private String price;
 
     @OneToMany(mappedBy = "hotel")
+    @JsonManagedReference
     public List<Room> room;
 
 
@@ -59,6 +61,7 @@ public class Hotel {
         this.location = location;
     }
 
+
     public List<Room> getRoom() {
         return room;
     }
@@ -66,7 +69,6 @@ public class Hotel {
     public void setRoom(List<Room> room) {
         this.room = room;
     }
-
 
     public Double getRating() {
         return rating;

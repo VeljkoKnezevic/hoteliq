@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,6 +15,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "hotelId", nullable = false)
     private Hotel hotel;
+
+
     @ManyToOne
     @JoinColumn(name = "roomId", nullable = false)
     private Room room;
@@ -21,12 +24,13 @@ public class Reservation {
     private Date start;
     private Date end;
 
+
     @OneToOne
     @JoinColumn(name = "guestId")
     private Guest guest;
 
-    public Reservation(int id, Hotel hotel, Room room, Date start, Date end) {
-        this.id = id;
+    public Reservation(Hotel hotel, Room room, Date start, Date end) {
+
         this.hotel = hotel;
         this.room = room;
         this.start = start;

@@ -1,5 +1,7 @@
 package com.veljkoknezevic.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,10 +19,12 @@ public class Room {
 
     private boolean isAvailable;
 
-
     @ManyToOne
     @JoinColumn(name = "hotelId", nullable = false)
-    public Hotel hotel;
+    @JsonBackReference
+    private Hotel hotel;
+
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "roomTypeId", nullable = true)
     private RoomType roomType;
@@ -49,12 +53,12 @@ public class Room {
         this.number = number;
     }
 
-    public boolean isAvailable() {
+    public boolean getIsAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public Hotel getHotel() {

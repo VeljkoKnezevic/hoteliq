@@ -55,7 +55,7 @@ public class ReservationService {
         Room room = optionalRoom.orElseThrow(() -> new RoomNotFoundException(reservationDTO.roomId()));
 
         return reservationRepository.save(new Reservation
-                (reservationDTO.reservationId(), hotel, room, reservationDTO.startDate(), reservationDTO.endDate()));
+                (hotel, room, reservationDTO.startDate(), reservationDTO.endDate()));
     }
 
 

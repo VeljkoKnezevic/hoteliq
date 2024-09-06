@@ -46,13 +46,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(c -> c
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/guests/**").permitAll()
-                        // /hotels/** refers to both the hotel and room endpoints of that http method
-                        .requestMatchers(HttpMethod.GET, "/hotels/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/reservations/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
-                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
+//                        // /hotels/** refers to both the hotel and room endpoints of that http method
+//                        .requestMatchers(HttpMethod.GET, "/hotels/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").hasRole("STAFF")
+//                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**", "/reservations/**").hasRole("STAFF")
+//                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
+//                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
+//                        .anyRequest().authenticated())
                 .build();
     }
 

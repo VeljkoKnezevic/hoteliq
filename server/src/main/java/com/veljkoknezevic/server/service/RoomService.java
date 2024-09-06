@@ -32,9 +32,13 @@ public class RoomService {
     }
 
     public Room addRoom(Room room, int hotelId) {
-        roomRepository.save(room);
+        Optional<Hotel> optionalHotel = hotelRepository.findHotelById(hotelId);
+        Hotel hotel = optionalHotel.orElseThrow(() -> new HotelNotFoundException(hotelId));
 
-        return room;
+        room.setHotel(hotel);
+        Room response = roomRepository.save(room);
+
+        return response;
     }
 
     public Room editRoom(int roomId, int hotelId, Room room) {
@@ -48,7 +52,7 @@ public class RoomService {
         if(hotelId == roomResponse.getHotel().getId()) {
             roomResponse.setNumber(room.getNumber());
             roomResponse.setRoomType(room.getRoomType());
-            roomResponse.setAvailable(room.isAvailable());
+            roomResponse.setIsAvailable(room.getIsAvailable());
             roomResponse.setFloor(room.getFloor());
             roomResponse.setHotel(room.getHotel());
 
