@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
-import { ProfileInfo, THotel } from "../types";
+import { ProfileInfo, THotel, TRoom } from "../types";
 import Popup from "reactjs-popup";
 import { handleInputChange } from "../misc/Helpers";
 import { useAuth } from "../context/AuthContext";
@@ -27,6 +27,15 @@ const Staff = () => {
     location: "",
     price: "",
     rating: 0.0,
+  });
+
+  const [addRoomData, setAddRoomData] = useState<TRoom>({
+    floor: 0,
+    number: 0,
+    roomType: {
+      id: 0,
+    },
+    isAvailable: true,
   });
 
   // Guests
@@ -199,6 +208,48 @@ const Staff = () => {
     }
   };
 
+  // Rooms
+  const getRoomForHotel = (hotelId: number) => {};
+
+  const addRoom = async (hotelId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/hotels/${hotelId}/rooms`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          },
+          body: JSON.stringify({ hotelId, ...addRoomData }),
+        }
+      );
+      console.log(addRoomData);
+
+      return await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addRoomMutation = useMutation({
+    mutationFn: addRoom,
+    onSuccess: () => {
+      console.log("Successfully added room");
+    },
+    onError: (err) => {
+      console.log("Room adding failed");
+
+      console.error(err);
+    },
+  });
+
+  const handleAddRoomSubmit = (e: React.SyntheticEvent, hotelId: number) => {
+    e.preventDefault();
+    if (hotelId) addRoomMutation.mutate(hotelId);
+  };
+
+  const deleteRoom = () => {};
   // Resrevations
   const getReservations = () => {};
   const getReservationsFromGuest = () => {};
@@ -483,6 +534,110 @@ const Staff = () => {
                                 className="mt-5 rounded-lg bg-secondary-blue px-4 py-1 text-lg text-[#fff]"
                               >
                                 Update hotel
+                              </button>
+                            </form>
+                          </section>
+                        </Popup>
+
+                        <Popup
+                          trigger={
+                            <button className="rounded  bg-primary-blue p-2 text-base font-medium text-[#fff]">
+                              Add room
+                            </button>
+                          }
+                          modal
+                        >
+                          <section className="flex  flex-col items-center">
+                            <h3 className="mb-3 mt-3 text-2xl text-primary-blue underline ">
+                              Add a Room to {hotel.name}
+                            </h3>
+                            <form
+                              onSubmit={(e) =>
+                                handleAddRoomSubmit(e, hotel.id ?? 0)
+                              }
+                              className="flex w-auto flex-col "
+                            >
+                              <label
+                                htmlFor="floor"
+                                className="mt-2 text-base font-medium text-secondary-blue"
+                              >
+                                Floor
+                              </label>
+                              <input
+                                className="mt-1 rounded border border-primary-blue p-2 text-sm font-medium text-text-black "
+                                type="text"
+                                name="floor"
+                                id="floor"
+                                value={addRoomData.floor}
+                                onChange={(e) =>
+                                  handleInputChange(e, setAddRoomData)
+                                }
+                              />
+                              <label
+                                htmlFor="number"
+                                className="mt-2 text-base font-medium text-secondary-blue"
+                              >
+                                Number
+                              </label>
+                              <input
+                                className="mt-1 rounded border border-primary-blue p-2 text-sm font-medium text-text-black "
+                                type="text"
+                                name="number"
+                                id="number"
+                                value={addRoomData.number}
+                                onChange={(e) =>
+                                  handleInputChange(e, setAddRoomData)
+                                }
+                              />
+                              <label
+                                htmlFor="roomType"
+                                className="mt-2 text-base font-medium text-secondary-blue"
+                              >
+                                Room Type
+                              </label>
+                              <select
+                                name="roomType"
+                                id="roomType"
+                                className="w-1/2 text-sm font-medium text-text-black lg:text-lg"
+                                value={addRoomData.roomType.id}
+                                onChange={(e) => {
+                                  console.log(e.target.value);
+                                  setAddRoomData((prev) => ({
+                                    ...prev,
+                                    roomType: {
+                                      id: Number(e.target.value),
+                                    },
+                                  }));
+                                }}
+                              >
+                                <option value="1">Single</option>
+                                <option value="2">Double</option>
+                                <option value="3">Triple</option>
+                              </select>
+                              <label
+                                htmlFor="isAvailable"
+                                className="mt-2 text-base font-medium text-secondary-blue"
+                              >
+                                Is Available
+                              </label>
+                              <input
+                                id="isAvailable"
+                                name="isAvailable"
+                                type="checkbox"
+                                checked={addRoomData.isAvailable}
+                                onChange={() =>
+                                  setAddRoomData((prev) => ({
+                                    ...prev,
+                                    isAvailable: !prev.isAvailable,
+                                  }))
+                                }
+                                className="mr-auto mt-2 h-6 w-6 cursor-pointer rounded-full "
+                              />
+                              <button
+                                type="submit"
+                                className="mt-5 rounded-lg bg-secondary-blue px-4 py-1 text-lg text-[#fff]"
+                              >
+                                Add room
                               </button>
                             </form>
                           </section>

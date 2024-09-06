@@ -66,3 +66,13 @@ export type THotel = {
   rating: number;
   price: string;
 };
+
+export type TRoom = {
+  hotelId?: number;
+  floor: number;
+  number: number;
+  roomType: {
+    id: number;
+  };
+  isAvailable: boolean;
+};

@@ -7,6 +7,7 @@ import "yet-another-react-lightbox/styles.css";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { THotel } from "../types";
+import Popup from "reactjs-popup";
 
 const Details = () => {
   const [readMore, setReadMore] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const Details = () => {
         <main className="m-6 md:m-10 lg:m-14 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
           <img
             className="mx-auto w-full rounded-md lg:aspect-video lg:w-9/12"
-            src={`/${data.location}-${(data.id % 3) + 1}.png`}
+            src={`/${data.location}-${((data.id !== undefined ? data.id : 0) % 3) + 1}.png`}
             alt=""
           />
           <Rating stars={data.rating} />
@@ -154,9 +155,16 @@ const Details = () => {
             ]}
           />
           <div className="flex w-full md:justify-center">
-            <button className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6 md:w-1/2 md:text-base lg:mt-8 xl:mt-10 xl:py-6">
-              Book now
-            </button>
+            <Popup
+              trigger={
+                <button className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6 md:w-1/2 md:text-base lg:mt-8 xl:mt-10 xl:py-6">
+                  Book now
+                </button>
+              }
+              modal
+            >
+              Cangs
+            </Popup>
           </div>
         </main>
       )}
