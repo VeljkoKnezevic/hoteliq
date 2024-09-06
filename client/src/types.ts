@@ -59,7 +59,7 @@ export type TParsedToken = {
 };
 
 export type THotel = {
-  id: number;
+  id?: number;
   name: string;
   address: string;
   location: string;

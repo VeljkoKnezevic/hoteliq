@@ -7,7 +7,7 @@ export function parseToken(token: string) {
 }
 
 export const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement>,
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   updateFunction: any
 ): void => {
   const { name, value } = e.target;

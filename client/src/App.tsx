@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { SnackbarProvider } from "notistack";
 import Staff from "./pages/Staff";
 import PrivateRoute from "./misc/PrivateRoute";
+import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/details/:id" element={<Details />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="*" element={<PageNotFound />} />
               <Route
                 path="/profile/:id"
                 element={

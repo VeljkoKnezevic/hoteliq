@@ -87,9 +87,9 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="flex h-screen flex-col justify-between">
       <Header />
-      <main className="mx-6 md:mx-10 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
+      <main className="mx-6 mb-auto md:mx-10 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
         <form className="mt-6 xl:mt-10">
           <div className="flex w-1/2 flex-col">
             <label
