@@ -6,6 +6,7 @@ import { ProfileInfo, THotel, TRoom } from "../types";
 import Popup from "reactjs-popup";
 import { handleInputChange } from "../misc/Helpers";
 import { useAuth } from "../context/AuthContext";
+import HotelRooms from "../components/HotelRooms";
 
 const Staff = () => {
   const queryClient = useQueryClient();
@@ -37,6 +38,8 @@ const Staff = () => {
     },
     isAvailable: true,
   });
+
+  const [roomDataFromHotel, setRoomDataFromHotel] = useState<TRoom[]>([]);
 
   // Guests
   const getGuests = async () => {
@@ -209,7 +212,6 @@ const Staff = () => {
   };
 
   // Rooms
-  const getRoomForHotel = (hotelId: number) => {};
 
   const addRoom = async (hotelId: number) => {
     try {
@@ -224,7 +226,6 @@ const Staff = () => {
           body: JSON.stringify({ hotelId, ...addRoomData }),
         }
       );
-      console.log(addRoomData);
 
       return await response.json();
     } catch (err) {
@@ -249,7 +250,6 @@ const Staff = () => {
     if (hotelId) addRoomMutation.mutate(hotelId);
   };
 
-  const deleteRoom = () => {};
   // Resrevations
   const getReservations = () => {};
   const getReservationsFromGuest = () => {};
@@ -433,7 +433,7 @@ const Staff = () => {
                         <Popup
                           trigger={
                             <button className="rounded  bg-primary-blue p-2 text-base font-medium text-[#fff]">
-                              Edit
+                              Edit hotel
                             </button>
                           }
                           modal
@@ -642,10 +642,24 @@ const Staff = () => {
                             </form>
                           </section>
                         </Popup>
-
+                        <Popup
+                          trigger={
+                            <button className="rounded  bg-primary-blue p-2 text-base font-medium text-[#fff]">
+                              Check rooms
+                            </button>
+                          }
+                          modal
+                        >
+                          <section>
+                            <h3 className="mb-3 mt-3 text-2xl text-primary-blue underline ">
+                              Rooms for {hotel.name}
+                            </h3>
+                            <HotelRooms hotelId={hotel.id ?? 0} />
+                          </section>
+                        </Popup>
                         <button
                           onClick={() => handleHotelDeleteClick(hotel)}
-                          className="rounded border-2 border-text-black bg-secondary-grey p-2 text-base font-medium text-[#f00]"
+                          className="ml-auto rounded border-2 border-text-black bg-secondary-grey p-2 text-base font-medium text-[#f00]"
                         >
                           Delete
                         </button>
