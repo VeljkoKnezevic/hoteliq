@@ -8,6 +8,7 @@ import com.veljkoknezevic.server.repository.HotelRepository;
 import com.veljkoknezevic.server.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,13 +23,13 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public Room findRoom(int hotelId, int roomId) {
+    public List<Room> findRoom(int hotelId) {
         Optional<Hotel> hotelOptional = hotelRepository.findHotelById(hotelId);
         Hotel hotel = hotelOptional.orElseThrow(() -> new HotelNotFoundException(hotelId));
 
-        Optional<Room> roomOptional = roomRepository.findRoomByIdAndHotel(roomId, hotel);
+       Optional<List<Room>> optionalRoomList = roomRepository.findRoomsByHotel(hotel);
 
-        return roomOptional.orElseThrow(() -> new RoomNotFoundException(roomId));
+        return optionalRoomList.orElseThrow(() -> new RoomNotFoundException(hotel.getRoom().get(0).getId()));
     }
 
     public Room addRoom(Room room, int hotelId) {
@@ -64,15 +65,5 @@ public class RoomService {
         return roomResponse;
     }
 
-
-    public void deleteRoom(int hotelId, int roomId) {
-        Optional<Hotel> hotelOptional = hotelRepository.findHotelById(hotelId);
-        Hotel hotel = hotelOptional.orElseThrow(() -> new HotelNotFoundException(hotelId));
-
-        Optional<Room> optionalRoom = roomRepository.findRoomByIdAndHotel(roomId, hotel);
-        Room room = optionalRoom.orElseThrow(() -> new RoomNotFoundException(roomId));
-
-        roomRepository.delete(room);
-    }
 
 }

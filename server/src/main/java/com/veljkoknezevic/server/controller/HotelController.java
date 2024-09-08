@@ -60,11 +60,11 @@ public class HotelController {
 
     // Room Endpoints
 
-    @GetMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<Room> findRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-        Room room = roomService.findRoom(hotelId, roomId);
+    @GetMapping("/{hotelId}/rooms")
+    public ResponseEntity<List<Room>> findRoomsByHotelId(@PathVariable int hotelId) {
+        List<Room> roomList = roomService.findRoom(hotelId);
 
-        return ResponseEntity.ok(room);
+        return ResponseEntity.ok(roomList);
     }
 
     @PostMapping("/{hotelId}/rooms")
@@ -79,13 +79,6 @@ public class HotelController {
         Room response = roomService.editRoom(roomId, hotelId, room);
 
         return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<?> deleteRoom(@PathVariable int hotelId, @PathVariable int roomId) {
-        roomService.deleteRoom(hotelId, roomId);
-
-        return ResponseEntity.ok(null);
     }
 
 
