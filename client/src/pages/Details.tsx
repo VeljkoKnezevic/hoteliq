@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { THotel } from "../types";
 import Popup from "reactjs-popup";
+import BookingCalendar from "../components/BookingCalendar";
 
 const Details = () => {
   const [readMore, setReadMore] = useState<boolean>(false);
@@ -156,6 +157,7 @@ const Details = () => {
           />
           <div className="flex w-full md:justify-center">
             <Popup
+              className="popup-calendar"
               trigger={
                 <button className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6 md:w-1/2 md:text-base lg:mt-8 xl:mt-10 xl:py-6">
                   Book now
@@ -163,7 +165,7 @@ const Details = () => {
               }
               modal
             >
-              Cangs
+              <BookingCalendar />
             </Popup>
           </div>
         </main>

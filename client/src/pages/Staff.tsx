@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import Popup from "reactjs-popup";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
-import { ProfileInfo, THotel, TRoom } from "../types";
-import Popup from "reactjs-popup";
-import { handleInputChange } from "../misc/Helpers";
-import { useAuth } from "../context/AuthContext";
 import HotelRooms from "../components/HotelRooms";
+import { useAuth } from "../context/AuthContext";
+import { handleInputChange } from "../misc/Helpers";
+import { ProfileInfo, THotel, TRoom } from "../types";
 
 const Staff = () => {
   const queryClient = useQueryClient();
@@ -38,8 +38,6 @@ const Staff = () => {
     },
     isAvailable: true,
   });
-
-  const [roomDataFromHotel, setRoomDataFromHotel] = useState<TRoom[]>([]);
 
   // Guests
   const getGuests = async () => {
