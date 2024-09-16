@@ -14,3 +14,13 @@ export const handleInputChange = (
 
   updateFunction((prev: any) => ({ ...prev, [name]: value }));
 };
+
+export const translateRoomType = (id: number) => {
+  if (id === 1) {
+    return "Single";
+  } else if (id === 2) {
+    return "Double";
+  } else {
+    return "Triple";
+  }
+};

@@ -58,16 +58,8 @@ export type TParsedToken = {
   sub: string;
 };
 
-export type THotel = {
-  id?: number;
-  name: string;
-  address: string;
-  location: string;
-  rating: number;
-  price: string;
-};
-
 export type TRoom = {
+  id?: number;
   hotelId?: number;
   floor: number;
   number: number;
@@ -75,4 +67,13 @@ export type TRoom = {
     id: number;
   };
   isAvailable: boolean;
+};
+
+export type THotel = {
+  id?: number;
+  name: string;
+  address: string;
+  location: string;
+  rating: number;
+  price: string;
 };

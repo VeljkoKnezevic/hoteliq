@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { TRoom } from "../types";
+import { Authorities, TRoom } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import { translateRoomType } from "../misc/Helpers";
 
 type THotelRooms = {
   hotelId: number;
+  authorities: Authorities;
 };
 
 const getRoomForHotel = async (hotelId: number) => {
@@ -32,26 +34,53 @@ const useHotelRooms = (hotelId: number) => {
   });
 };
 
-const HotelRooms = ({ hotelId }: THotelRooms) => {
+const HotelRooms = ({ hotelId, authorities }: THotelRooms) => {
   const { data: roomData } = useHotelRooms(hotelId);
 
   if (roomData?.length === 0) {
     return <p>No rooms at this hotel</p>;
   }
-  return (
-    <section className="flex flex-col gap-4">
-      {roomData?.map((room) => {
-        return (
-          <div className=" border-2 border-text-black" key={uuidv4()}>
-            <p>
-              Room number: {room.number}, floor: {room.floor}
-            </p>
-            <p>Available: {room.isAvailable ? "yes" : "no"}</p>
-          </div>
-        );
-      })}
-    </section>
-  );
+
+  if (authorities === "GUEST") {
+    return (
+      <section className="flex flex-col gap-4">
+        {roomData
+          ?.filter((room) => room.isAvailable)
+          .map((room) => {
+            return (
+              <div
+                className="flex justify-between border-2 border-primary-blue px-2 py-4"
+                key={uuidv4()}
+              >
+                <div>
+                  <p>Room number: {room.number}</p>
+                  <p>floor: {room.floor}</p>
+                </div>
+                <p>Room type: {translateRoomType(room.roomType.id)}</p>
+                <button className="rounded-lg bg-secondary-blue px-4 py-1 text-lg text-[#fff]">
+                  Book
+                </button>
+              </div>
+            );
+          })}
+      </section>
+    );
+  } else {
+    return (
+      <section className="flex flex-col gap-4">
+        {roomData?.map((room) => {
+          return (
+            <div className=" border-2 border-text-black" key={uuidv4()}>
+              <p>
+                Room number: {room.number}, floor: {room.floor}
+              </p>
+              <p>Available: {room.isAvailable ? "yes" : "no"}</p>
+            </div>
+          );
+        })}
+      </section>
+    );
+  }
 };
 
 export default HotelRooms;

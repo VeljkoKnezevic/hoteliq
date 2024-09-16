@@ -652,7 +652,10 @@ const Staff = () => {
                             <h3 className="mb-3 mt-3 text-2xl text-primary-blue underline ">
                               Rooms for {hotel.name}
                             </h3>
-                            <HotelRooms hotelId={hotel.id ?? 0} />
+                            <HotelRooms
+                              authorities="STAFF"
+                              hotelId={hotel.id ?? 0}
+                            />
                           </section>
                         </Popup>
                         <button

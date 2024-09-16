@@ -11,7 +11,7 @@ body {
   @apply min-h-screen;
 }
 
-/* Styling for search popup */
+/* Styling for popups */
 
 .popup-content {
   width: 90%;
@@ -36,6 +36,12 @@ body {
 
   .popup-calendar-content {
     width: 44%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .popup-calendar-content {
+    width: 22%;
   }
 }
 

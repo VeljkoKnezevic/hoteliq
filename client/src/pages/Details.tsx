@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { THotel } from "../types";
 import Popup from "reactjs-popup";
-import BookingCalendar from "../components/BookingCalendar";
+import BookingPopup from "../components/BookingPopup";
 
 const Details = () => {
   const [readMore, setReadMore] = useState<boolean>(false);
@@ -165,7 +165,7 @@ const Details = () => {
               }
               modal
             >
-              <BookingCalendar />
+              <BookingPopup />
             </Popup>
           </div>
         </main>
