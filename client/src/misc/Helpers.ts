@@ -1,3 +1,5 @@
+import { CalendarSelected } from "@demark-pro/react-booking-calendar";
+
 export function parseToken(token: string) {
   if (!token) return;
 
@@ -23,4 +25,14 @@ export const translateRoomType = (id: number) => {
   } else {
     return "Triple";
   }
+};
+
+export const dateConverter = (
+  startDate: CalendarSelected,
+  endDate: CalendarSelected
+) => {
+  return {
+    convertedStartDate: Number(startDate?.valueOf()) + 1,
+    convertedEndDate: Number(endDate?.valueOf()) - 1,
+  };
 };

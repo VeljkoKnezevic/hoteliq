@@ -164,6 +164,7 @@ const Details = () => {
                 </button>
               }
               modal
+              lockScroll
             >
               <BookingPopup />
             </Popup>

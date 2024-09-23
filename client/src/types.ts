@@ -77,3 +77,11 @@ export type THotel = {
   rating: number;
   price: string;
 };
+
+export type TReservation = {
+  startDate: number;
+  endDate: number;
+  hotelId: number;
+  guestId: number;
+  roomId: number;
+};

@@ -2,10 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Authorities, TRoom } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { translateRoomType } from "../misc/Helpers";
+import { SetStateAction } from "react";
 
 type THotelRooms = {
   hotelId: number;
   authorities: Authorities;
+  selectedRoom: TRoom;
+  setSelectedRoom?: React.Dispatch<SetStateAction<TRoom>>;
 };
 
 const getRoomForHotel = async (hotelId: number) => {
@@ -34,7 +37,12 @@ const useHotelRooms = (hotelId: number) => {
   });
 };
 
-const HotelRooms = ({ hotelId, authorities }: THotelRooms) => {
+const HotelRooms = ({
+  hotelId,
+  authorities,
+  setSelectedRoom,
+  selectedRoom,
+}: THotelRooms) => {
   const { data: roomData } = useHotelRooms(hotelId);
 
   if (roomData?.length === 0) {
@@ -48,19 +56,36 @@ const HotelRooms = ({ hotelId, authorities }: THotelRooms) => {
           ?.filter((room) => room.isAvailable)
           .map((room) => {
             return (
-              <div
-                className="flex justify-between border-2 border-primary-blue px-2 py-4"
+              <button
+                className={`flex text-start ${selectedRoom === room ? "border-4" : ""} justify-between border-2 border-primary-blue px-6 py-4 first:mt-5`}
                 key={uuidv4()}
+                onClick={() => setSelectedRoom && setSelectedRoom(room)}
               >
                 <div>
-                  <p>Room number: {room.number}</p>
-                  <p>floor: {room.floor}</p>
+                  <h4 className="text-sm font-bold text-text-black md:text-base lg:text-lg xl:text-xl">
+                    Number{" "}
+                  </h4>
+                  <p className="text-base font-bold text-primary-blue">
+                    {room.number}
+                  </p>
                 </div>
-                <p>Room type: {translateRoomType(room.roomType.id)}</p>
-                <button className="rounded-lg bg-secondary-blue px-4 py-1 text-lg text-[#fff]">
-                  Book
-                </button>
-              </div>
+                <div>
+                  <h4 className="text-sm font-bold text-text-black md:text-base lg:text-lg xl:text-xl">
+                    Floor
+                  </h4>
+                  <p className="text-base font-bold text-primary-blue">
+                    {room.floor}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-text-black md:text-base lg:text-lg xl:text-xl">
+                    Type
+                  </h4>
+                  <p className="text-base font-bold text-primary-blue">
+                    {translateRoomType(room.roomType.id)}
+                  </p>
+                </div>
+              </button>
             );
           })}
       </section>

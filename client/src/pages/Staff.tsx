@@ -248,10 +248,6 @@ const Staff = () => {
     if (hotelId) addRoomMutation.mutate(hotelId);
   };
 
-  // Resrevations
-  const getReservations = () => {};
-  const getReservationsFromGuest = () => {};
-
   return (
     <>
       <Header />
@@ -670,11 +666,6 @@ const Staff = () => {
                 })}
           </div>
         </section>
-
-        {/* Reservations */}
-        <div className="mt-6 flex justify-between">
-          <h3 className="text-2xl text-secondary-blue">Reservations</h3>
-        </div>
       </main>
     </>
   );
