@@ -658,7 +658,7 @@ const Staff = () => {
                           onClick={() => handleHotelDeleteClick(hotel)}
                           className="ml-auto rounded border-2 border-text-black bg-secondary-grey p-2 text-base font-medium text-[#f00]"
                         >
-                          Delete
+                          Delete hotel
                         </button>
                       </div>
                     </div>

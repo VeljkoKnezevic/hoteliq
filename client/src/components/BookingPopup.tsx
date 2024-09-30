@@ -17,6 +17,7 @@ const BookingPopup = () => {
   const { getUser } = useAuth();
 
   const [selectedDates, setSelectedDays] = useState<CalendarSelected[]>([]);
+  const [updatedRoom, setUpdatedRoom] = useState<TRoom | undefined>();
   const [selectedRoom, setSelectedRoom] = useState<TRoom>({
     floor: 0,
     isAvailable: false,
@@ -74,10 +75,12 @@ const BookingPopup = () => {
   });
 
   useEffect(() => {
-    console.log(reservation);
-
     if (reservation.startDate !== null && reservation.startDate !== 0) {
-      addReservationMutation.mutate(reservation);
+      addReservationMutation.mutate(reservation, {
+        onSuccess: () => {
+          setUpdatedRoom(selectedRoom);
+        },
+      });
     }
   }, [reservation]);
 
@@ -98,6 +101,11 @@ const BookingPopup = () => {
       hotelId: Number(hotelID),
       guestId: guestId ?? 0,
     });
+
+    setSelectedRoom((prev) => ({
+      ...prev,
+      isAvailable: false,
+    }));
   };
 
   return (
@@ -125,6 +133,7 @@ const BookingPopup = () => {
         setSelectedRoom={setSelectedRoom}
         authorities="GUEST"
         hotelId={Number(hotelID)}
+        updatedRoom={updatedRoom}
       />
       <button
         className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6  md:text-base lg:mt-8 xl:mt-10 xl:py-6"

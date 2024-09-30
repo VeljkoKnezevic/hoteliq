@@ -1,40 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Authorities, TRoom } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { translateRoomType } from "../misc/Helpers";
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect } from "react";
 
 type THotelRooms = {
   hotelId: number;
   authorities: Authorities;
-  selectedRoom: TRoom;
+  selectedRoom?: TRoom;
   setSelectedRoom?: React.Dispatch<SetStateAction<TRoom>>;
-};
-
-const getRoomForHotel = async (hotelId: number) => {
-  try {
-    const response = await fetch(
-      `http://localhost:8080/hotels/${hotelId}/rooms`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
-        },
-      }
-    );
-
-    return await response.json();
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const useHotelRooms = (hotelId: number) => {
-  return useQuery<TRoom[]>({
-    queryFn: () => getRoomForHotel(hotelId),
-    queryKey: ["rooms", hotelId],
-  });
+  updatedRoom?: TRoom;
 };
 
 const HotelRooms = ({
@@ -42,7 +17,75 @@ const HotelRooms = ({
   authorities,
   setSelectedRoom,
   selectedRoom,
+  updatedRoom,
 }: THotelRooms) => {
+  const queryClient = useQueryClient();
+
+  const getRoomForHotel = async (hotelId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/hotels/${hotelId}/rooms`,
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          },
+        }
+      );
+
+      return await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const useHotelRooms = (hotelId: number) => {
+    return useQuery<TRoom[]>({
+      queryFn: () => getRoomForHotel(hotelId),
+      queryKey: ["rooms", hotelId],
+    });
+  };
+
+  const updateRoom = async (room: TRoom) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/hotels/${hotelId}/rooms/${room.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+            // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          },
+          body: JSON.stringify(room),
+        }
+      );
+
+      return await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateRoomMutation = useMutation({
+    mutationFn: updateRoom,
+    onSuccess: () => {
+      console.log("Room updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+    onError: (error) => {
+      console.error("Error when updating room:", error);
+    },
+  });
+
+  useEffect(() => {
+    console.log(updatedRoom);
+
+    if (updatedRoom !== undefined && !updatedRoom.isAvailable) {
+      updateRoomMutation.mutate(updatedRoom);
+    }
+  }, [updatedRoom]);
+
   const { data: roomData } = useHotelRooms(hotelId);
 
   if (roomData?.length === 0) {
