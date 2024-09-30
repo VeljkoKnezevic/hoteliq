@@ -42,27 +42,26 @@ public class RoomService {
         return response;
     }
 
-    public Room editRoom(int roomId, int hotelId, Room room) {
+    public Room editRoom(int roomId, int hotelId, Room room) throws RoomNotFoundException {
         Optional<Hotel> hotelOptional = hotelRepository.findHotelById(hotelId);
         Hotel hotel = hotelOptional.orElseThrow(() -> new HotelNotFoundException(hotelId));
 
         Optional<Room> roomOptional = roomRepository.findById(roomId);
-        Room roomResponse = roomOptional.orElseThrow(() -> new RoomNotFoundException(roomId));
+        Room dbRoom;
 
+        if(roomOptional.isPresent()) {
+            dbRoom = roomOptional.get();
 
-        if(hotelId == roomResponse.getHotel().getId()) {
-            roomResponse.setNumber(room.getNumber());
-            roomResponse.setRoomType(room.getRoomType());
-            roomResponse.setIsAvailable(room.getIsAvailable());
-            roomResponse.setFloor(room.getFloor());
-            roomResponse.setHotel(room.getHotel());
-
-            roomRepository.save(roomResponse);
+            dbRoom.setNumber(room.getNumber() == 0 ? dbRoom.getNumber() : room.getNumber());
+            dbRoom.setRoomType(room.getRoomType() == null ? dbRoom.getRoomType() : room.getRoomType());
+            dbRoom.setIsAvailable(room.getIsAvailable());
+            dbRoom.setFloor(room.getFloor() == 0 ? dbRoom.getFloor() : room.getFloor());
+            dbRoom.setHotel(hotel);
         } else {
-            throw new RoomNotFoundException(roomResponse.getId());
+            throw new RoomNotFoundException(roomId);
         }
 
-        return roomResponse;
+        return roomRepository.save(dbRoom);
     }
 
 

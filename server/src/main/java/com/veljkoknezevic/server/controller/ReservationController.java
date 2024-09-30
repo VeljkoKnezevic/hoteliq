@@ -20,22 +20,17 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Reservation>> reservationHistory(Guest guest) {
-        List<Reservation> reservations = reservationService.findReservations(guest);
+    @GetMapping("/{hotelId}")
+    public ResponseEntity<List<Reservation>> reservationHistory(@PathVariable int hotelId) {
+        List<Reservation> reservations = reservationService.findReservations(hotelId);
 
         return ResponseEntity.ok(reservations);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Reservation> detailedReservationInfo(@PathVariable int id) {
-        Reservation reservation = reservationService.findReservationById(id);
-
-        return ResponseEntity.ok(reservation);
-    }
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO dto) {
+        System.out.println(dto);
         Reservation reservation = reservationService.addReservation(dto);
 
         return ResponseEntity.ok(reservation);

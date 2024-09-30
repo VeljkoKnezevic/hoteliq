@@ -2,6 +2,8 @@ package com.veljkoknezevic.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.Date;
 
@@ -11,30 +13,24 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @ManyToOne
     @JoinColumn(name = "hotelId", nullable = false)
     private Hotel hotel;
-
-
     @ManyToOne
     @JoinColumn(name = "roomId", nullable = false)
     private Room room;
-
     private Date start;
     private Date end;
-
-
-    @OneToOne
-    @JoinColumn(name = "guestId")
+    @ManyToOne
+    @JoinColumn(name = "guest_id", nullable = false)
     private Guest guest;
 
-    public Reservation(Hotel hotel, Room room, Date start, Date end) {
-
+    public Reservation(Hotel hotel, Room room, Date start, Date end, Guest guest) {
         this.hotel = hotel;
         this.room = room;
         this.start = start;
         this.end = end;
+        this.guest = guest;
     }
 
     public Reservation() {

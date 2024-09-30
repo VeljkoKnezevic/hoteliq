@@ -32,9 +32,8 @@ public class Guest implements UserDetails {
     )
     private Set<Role> authorities;
 
-    @OneToOne
-    @JoinColumn(name = "reservationId")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "guest",cascade = CascadeType.PERSIST)
+    private List<Reservation> reservations;
 
     public Guest() {
         super();
@@ -55,17 +54,15 @@ public class Guest implements UserDetails {
         this.authorities = authorities;
     }
 
-    public Guest(int id, String firstName, String lastName, String email, String password, Set<Role> authorities, Reservation reservation) {
+    public Guest(int id, String firstName, String lastName, String email, String password, Set<Role> authorities, List<Reservation> reservations) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-        this.reservation = reservation;
+        this.reservations = reservations;
     }
-
-
 
     public int getId() {
         return id;
@@ -137,11 +134,17 @@ public class Guest implements UserDetails {
         this.password = password;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
 }
