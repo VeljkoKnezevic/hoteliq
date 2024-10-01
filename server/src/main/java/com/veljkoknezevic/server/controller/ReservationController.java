@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.controller;
 
+import com.veljkoknezevic.server.dto.DatesDTO;
 import com.veljkoknezevic.server.dto.ReservationDTO;
 import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.model.Reservation;
@@ -21,16 +22,14 @@ public class ReservationController {
     }
 
     @GetMapping("/{hotelId}")
-    public ResponseEntity<List<Reservation>> reservationHistory(@PathVariable int hotelId) {
-        List<Reservation> reservations = reservationService.findReservations(hotelId);
-
+    public ResponseEntity<List<DatesDTO>> reservationHistory(@PathVariable int hotelId) {
+        List<DatesDTO> reservations = reservationService.findReservations(hotelId);
         return ResponseEntity.ok(reservations);
     }
 
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO dto) {
-        System.out.println(dto);
         Reservation reservation = reservationService.addReservation(dto);
 
         return ResponseEntity.ok(reservation);

@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.service;
 
+import com.veljkoknezevic.server.dto.DatesDTO;
 import com.veljkoknezevic.server.dto.ReservationDTO;
 import com.veljkoknezevic.server.exception.GuestNotFoundException;
 import com.veljkoknezevic.server.exception.HotelNotFoundException;
@@ -13,8 +14,11 @@ import com.veljkoknezevic.server.repository.GuestRepository;
 import com.veljkoknezevic.server.repository.HotelRepository;
 import com.veljkoknezevic.server.repository.ReservationRepository;
 import com.veljkoknezevic.server.repository.RoomRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +32,8 @@ public class ReservationService {
 
     private final GuestRepository guestRepository;
 
+    ModelMapper modelMapper  = new ModelMapper();
+
     public ReservationService(ReservationRepository reservationRepository, HotelRepository hotelRepository, RoomRepository roomRepository, GuestRepository guestRepository) {
         this.reservationRepository = reservationRepository;
         this.hotelRepository = hotelRepository;
@@ -35,13 +41,22 @@ public class ReservationService {
         this.guestRepository = guestRepository;
     }
 
-    public List<Reservation> findReservations(int hotelId) {
+    public List<DatesDTO> findReservations(int hotelId) {
         Optional<Hotel> hotelOptional = hotelRepository.findById(hotelId);
         Hotel hotel = hotelOptional.orElseThrow(() ->new HotelNotFoundException(hotelId));
 
         Optional<List<Reservation>> reservationOptional = reservationRepository.findReservationByHotel(hotel);
+        List<Reservation> reservations = reservationOptional.orElseThrow(ReservationNotFoundException::new);
+        List<DatesDTO> datesDTOS = new ArrayList<>();
 
-        return reservationOptional.orElseThrow(ReservationNotFoundException::new);
+
+        reservations.forEach(reservation -> {
+            DatesDTO datesDTO = modelMapper.map(reservation, DatesDTO.class);
+
+            datesDTOS.add(datesDTO);
+        });
+
+        return datesDTOS;
     }
 
     public Reservation addReservation(ReservationDTO reservationDTO) {
@@ -49,17 +64,17 @@ public class ReservationService {
 
 
 
-        Optional<Hotel> optionalHotel = hotelRepository.findHotelById(reservationDTO.hotelId());
-        Hotel hotel = optionalHotel.orElseThrow(() -> new HotelNotFoundException(reservationDTO.hotelId()));
+        Optional<Hotel> optionalHotel = hotelRepository.findHotelById(reservationDTO.getHotelId());
+        Hotel hotel = optionalHotel.orElseThrow(() -> new HotelNotFoundException(reservationDTO.getHotelId()));
 
-        Optional<Room> optionalRoom = roomRepository.findById(reservationDTO.roomId());
-        Room room = optionalRoom.orElseThrow(() -> new RoomNotFoundException(reservationDTO.roomId()));
+        Optional<Room> optionalRoom = roomRepository.findById(reservationDTO.getRoomId());
+        Room room = optionalRoom.orElseThrow(() -> new RoomNotFoundException(reservationDTO.getRoomId()));
 
-        Optional<Guest> guestOptional = guestRepository.findById(reservationDTO.guestId());
-        Guest guest = guestOptional.orElseThrow(() -> new GuestNotFoundException(reservationDTO.guestId()));
+        Optional<Guest> guestOptional = guestRepository.findById(reservationDTO.getGuestId());
+        Guest guest = guestOptional.orElseThrow(() -> new GuestNotFoundException(reservationDTO.getGuestId()));
 
         return reservationRepository.save(new Reservation
-                (hotel, room, reservationDTO.startDate(), reservationDTO.endDate(), guest));
+                (hotel, room, reservationDTO.getStartDate(), reservationDTO.getEndDate(), guest));
     }
 
 
