@@ -4,19 +4,20 @@ import {
   CalendarSelected,
 } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import HotelRooms from "./HotelRooms";
 import { useParams } from "react-router-dom";
-import { TReservation, TRoom } from "../types";
 import { useAuth } from "../context/AuthContext";
-import { useMutation } from "@tanstack/react-query";
-import { dateConverter } from "../misc/Helpers";
+import { convertDateFields, dateConverter } from "../misc/Helpers";
+import { TReservation, TRoom } from "../types";
+import HotelRooms from "./HotelRooms";
 
 const BookingPopup = () => {
   const { id: hotelID } = useParams();
   const { getUser } = useAuth();
 
   const [selectedDates, setSelectedDays] = useState<CalendarSelected[]>([]);
+
   const [updatedRoom, setUpdatedRoom] = useState<TRoom | undefined>();
   const [selectedRoom, setSelectedRoom] = useState<TRoom>({
     floor: 0,
@@ -34,19 +35,27 @@ const BookingPopup = () => {
     roomId: 0,
   });
 
-  const reserved: CalendarReserved[] = Array.from({ length: 2 }, () => {
-    const startDate = new Date(
-      "Tue Sep 17 2024 00:00:00 GMT+0200 (Central European Summer Time)"
+  const getReservations = async (hotelId: number) => {
+    const response = await fetch(
+      `http://localhost:8080/reservations/${hotelId}`,
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
     );
-    const endDate = new Date(
-      "Thu Sep 19 2024 00:00:00 GMT+0200 (Central European Summer Time)"
-    );
+    return await response.json();
+  };
 
-    return {
-      startDate: startDate,
-      endDate: endDate,
-    };
+  const { data: reservationData } = useQuery<TReservation[]>({
+    queryKey: ["reservations"],
+    queryFn: () => getReservations(Number(hotelID)),
   });
+  const reserved: CalendarReserved[] =
+    reservationData?.map((data) => ({
+      startDate: new Date(data.startDate),
+      endDate: new Date(data.endDate),
+    })) || [];
 
   const addReservation = async (reservation: TReservation) => {
     try {
@@ -128,19 +137,26 @@ const BookingPopup = () => {
       <h4 className="mt-3 text-base font-bold text-text-black md:text-lg xl:text-xl">
         Pick a room
       </h4>
-      <HotelRooms
-        selectedRoom={selectedRoom}
-        setSelectedRoom={setSelectedRoom}
-        authorities="GUEST"
-        hotelId={Number(hotelID)}
-        updatedRoom={updatedRoom}
-      />
-      <button
-        className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6  md:text-base lg:mt-8 xl:mt-10 xl:py-6"
-        type="submit"
-      >
-        Make reservation
-      </button>
+      {selectedDates.length !== 0 && (
+        <>
+          <HotelRooms
+            selectedRoom={selectedRoom}
+            setSelectedRoom={setSelectedRoom}
+            authorities="GUEST"
+            hotelId={Number(hotelID)}
+            updatedRoom={updatedRoom}
+          />
+          <button
+            className="mt-3 w-full rounded-xl bg-primary-blue py-4 text-sm font-bold text-[#fff] md:mt-6  md:text-base lg:mt-8 xl:mt-10 xl:py-6"
+            type="submit"
+          >
+            Make reservation
+          </button>
+        </>
+      )}
+      {selectedDates.length === 0 && (
+        <p>First, select a date, and then hotels will appear.</p>
+      )}
     </form>
   );
 };

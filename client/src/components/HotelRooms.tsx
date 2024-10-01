@@ -79,8 +79,6 @@ const HotelRooms = ({
   });
 
   useEffect(() => {
-    console.log(updatedRoom);
-
     if (updatedRoom !== undefined && !updatedRoom.isAvailable) {
       updateRoomMutation.mutate(updatedRoom);
     }
