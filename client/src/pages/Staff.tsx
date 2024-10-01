@@ -1,11 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import Popup from "reactjs-popup";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
-import { ProfileInfo, THotel, TRoom } from "../types";
-import Popup from "reactjs-popup";
-import { handleInputChange } from "../misc/Helpers";
+import HotelRooms from "../components/HotelRooms";
 import { useAuth } from "../context/AuthContext";
+import { handleInputChange } from "../misc/Helpers";
+import { ProfileInfo, THotel, TRoom } from "../types";
 
 const Staff = () => {
   const queryClient = useQueryClient();
@@ -209,7 +210,6 @@ const Staff = () => {
   };
 
   // Rooms
-  const getRoomForHotel = (hotelId: number) => {};
 
   const addRoom = async (hotelId: number) => {
     try {
@@ -224,7 +224,6 @@ const Staff = () => {
           body: JSON.stringify({ hotelId, ...addRoomData }),
         }
       );
-      console.log(addRoomData);
 
       return await response.json();
     } catch (err) {
@@ -248,11 +247,6 @@ const Staff = () => {
     e.preventDefault();
     if (hotelId) addRoomMutation.mutate(hotelId);
   };
-
-  const deleteRoom = () => {};
-  // Resrevations
-  const getReservations = () => {};
-  const getReservationsFromGuest = () => {};
 
   return (
     <>
@@ -433,7 +427,7 @@ const Staff = () => {
                         <Popup
                           trigger={
                             <button className="rounded  bg-primary-blue p-2 text-base font-medium text-[#fff]">
-                              Edit
+                              Edit hotel
                             </button>
                           }
                           modal
@@ -642,12 +636,29 @@ const Staff = () => {
                             </form>
                           </section>
                         </Popup>
-
+                        <Popup
+                          trigger={
+                            <button className="rounded  bg-primary-blue p-2 text-base font-medium text-[#fff]">
+                              Check rooms
+                            </button>
+                          }
+                          modal
+                        >
+                          <section>
+                            <h3 className="mb-3 mt-3 text-2xl text-primary-blue underline ">
+                              Rooms for {hotel.name}
+                            </h3>
+                            <HotelRooms
+                              authorities="STAFF"
+                              hotelId={hotel.id ?? 0}
+                            />
+                          </section>
+                        </Popup>
                         <button
                           onClick={() => handleHotelDeleteClick(hotel)}
-                          className="rounded border-2 border-text-black bg-secondary-grey p-2 text-base font-medium text-[#f00]"
+                          className="ml-auto rounded border-2 border-text-black bg-secondary-grey p-2 text-base font-medium text-[#f00]"
                         >
-                          Delete
+                          Delete hotel
                         </button>
                       </div>
                     </div>
@@ -655,11 +666,6 @@ const Staff = () => {
                 })}
           </div>
         </section>
-
-        {/* Reservations */}
-        <div className="mt-6 flex justify-between">
-          <h3 className="text-2xl text-secondary-blue">Reservations</h3>
-        </div>
       </main>
     </>
   );

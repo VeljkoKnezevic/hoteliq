@@ -11,7 +11,7 @@ body {
   @apply min-h-screen;
 }
 
-/* Styling for search popup */
+/* Styling for popups */
 
 .popup-content {
   width: 90%;
@@ -23,10 +23,27 @@ body {
   overflow-y: scroll;
 }
 
+.popup-calendar-content {
+  width: 95%;
+  height: 80%;
+}
+
 @media (min-width: 1024px) {
   .popup-content {
     width: 70%;
     height: fit-content;
+  }
+
+  .popup-calendar-content {
+    width: 44%;
+    height: 70%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .popup-calendar-content {
+    width: 22%;
+    height: 80%;
   }
 }
 

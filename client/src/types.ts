@@ -58,6 +58,17 @@ export type TParsedToken = {
   sub: string;
 };
 
+export type TRoom = {
+  id?: number;
+  hotelId?: number;
+  floor: number;
+  number: number;
+  roomType: {
+    id: number;
+  };
+  isAvailable: boolean;
+};
+
 export type THotel = {
   id?: number;
   name: string;
@@ -67,12 +78,10 @@ export type THotel = {
   price: string;
 };
 
-export type TRoom = {
-  hotelId?: number;
-  floor: number;
-  number: number;
-  roomType: {
-    id: number;
-  };
-  isAvailable: boolean;
+export type TReservation = {
+  startDate: number;
+  endDate: number;
+  hotelId: number;
+  guestId: number;
+  roomId: number;
 };
