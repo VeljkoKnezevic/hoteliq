@@ -3,7 +3,7 @@ import { useState } from "react";
 import Popup from "reactjs-popup";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
-import HotelRooms from "../components/HotelRooms";
+import HotelRooms from "../containers/HotelRooms";
 import { handleInputChange } from "../misc/Helpers";
 import { ProfileInfo, THotel, TRoom } from "../types";
 

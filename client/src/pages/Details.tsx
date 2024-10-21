@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { THotel } from "../types";
 import Popup from "reactjs-popup";
-import BookingPopup from "../components/BookingPopup";
+import BookingPopup from "../containers/BookingPopup";
 
 const Details = () => {
   const [readMore, setReadMore] = useState<boolean>(false);

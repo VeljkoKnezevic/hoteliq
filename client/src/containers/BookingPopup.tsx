@@ -53,11 +53,7 @@ const BookingPopup = () => {
     return await response.json();
   };
 
-  const {
-    error: reservationError,
-    isLoading: reservationLoading,
-    data: reservationData,
-  } = useQuery<TReservation[]>({
+  const { data: reservationData } = useQuery<TReservation[]>({
     queryKey: ["reservations"],
     queryFn: () => getReservations(Number(hotelID)),
   });
