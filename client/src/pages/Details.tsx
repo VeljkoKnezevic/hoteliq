@@ -29,25 +29,35 @@ const Details = () => {
         "Allow-Access-Control-Origin": "http://localhost:5173/",
       },
     });
+
+    if (!response.ok) {
+      throw new Error("Network response is not ok");
+    }
+
     return await response.json();
   };
 
-  const { isLoading, error, data } = useQuery<THotel>({
+  const {
+    isLoading: hotelLoading,
+    error: hotelError,
+    data: hotelData,
+  } = useQuery<THotel>({
     queryKey: ["hotel"],
     queryFn: fetchHotelById,
   });
 
-  if (error) {
+  if (hotelError) {
     return (
       <>
         <Header />
         <p className="mx-6 mt-5 text-2xl md:mx-10">Error fetching data</p>
+        <p>{hotelError.message}</p>
         <Footer />
       </>
     );
   }
 
-  if (isLoading) {
+  if (hotelLoading) {
     return (
       <>
         <Header />
@@ -60,21 +70,21 @@ const Details = () => {
   return (
     <>
       <Header />
-      {data && (
+      {hotelData && (
         <main className="m-6 md:m-10 lg:m-14 xl:mx-auto xl:max-w-[1200px] 2xl:max-w-[1440px]">
           <img
             className="mx-auto w-full rounded-md lg:aspect-video lg:w-9/12"
-            src={`/${data.location}-${((data.id !== undefined ? data.id : 0) % 3) + 1}.png`}
+            src={`/${hotelData.location}-${((hotelData.id !== undefined ? hotelData.id : 0) % 3) + 1}.png`}
             alt=""
           />
-          <Rating stars={data.rating} />
+          <Rating stars={hotelData.rating} />
           <div className="mt-4 flex justify-between lg:mt-6">
             <h3 className="text-base font-bold text-text-black md:text-lg lg:text-xl xl:text-2xl">
-              {data.name}
+              {hotelData.name}
             </h3>
             <p className="text-sm font-medium text-primary-grey">
               <span className="text-base text-secondary-blue">
-                ${data.price}
+                ${hotelData.price}
               </span>
               /night
             </p>
@@ -82,7 +92,7 @@ const Details = () => {
           <div className="mt-2 flex items-center gap-1">
             <img src="/location.svg" alt="location" />
             <p className="text-xs text-primary-grey lg:text-sm">
-              {data.address}, {data.location}
+              {hotelData.address}, {hotelData.location}
             </p>
           </div>
 
@@ -126,21 +136,21 @@ const Details = () => {
             <button onClick={() => handleLightboxClick(0)}>
               <img
                 className="w-80 rounded md:w-fit"
-                src={`/${data.location}-1.png`}
+                src={`/${hotelData.location}-1.png`}
                 alt=""
               />
             </button>
             <button onClick={() => handleLightboxClick(1)}>
               <img
                 className="w-80 rounded md:w-fit"
-                src={`/${data.location}-2.png`}
+                src={`/${hotelData.location}-2.png`}
                 alt=""
               />
             </button>
             <button onClick={() => handleLightboxClick(2)}>
               <img
                 className="w-80 rounded md:w-fit"
-                src={`/${data.location}-3.png`}
+                src={`/${hotelData.location}-3.png`}
                 alt=""
               />
             </button>
@@ -150,9 +160,9 @@ const Details = () => {
             index={index}
             close={() => setOpen(false)}
             slides={[
-              { src: `/${data.location}-1.png` },
-              { src: `/${data.location}-2.png` },
-              { src: `/${data.location}-3.png` },
+              { src: `/${hotelData.location}-1.png` },
+              { src: `/${hotelData.location}-2.png` },
+              { src: `/${hotelData.location}-3.png` },
             ]}
           />
           <div className="flex w-full md:justify-center">

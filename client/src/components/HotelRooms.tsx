@@ -22,22 +22,22 @@ const HotelRooms = ({
   const queryClient = useQueryClient();
 
   const getRoomForHotel = async (hotelId: number) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/hotels/${hotelId}/rooms`,
-        {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-            // Authorization: `Bearer ${getUser()?.user.jwt}`,
-          },
-        }
-      );
+    const response = await fetch(
+      `http://localhost:8080/hotels/${hotelId}/rooms`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+        },
+      }
+    );
 
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
 
   const useHotelRooms = (hotelId: number) => {
@@ -48,23 +48,23 @@ const HotelRooms = ({
   };
 
   const updateRoom = async (room: TRoom) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/hotels/${hotelId}/rooms/${room.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-            // Authorization: `Bearer ${getUser()?.user.jwt}`,
-          },
-          body: JSON.stringify(room),
-        }
-      );
+    const response = await fetch(
+      `http://localhost:8080/hotels/${hotelId}/rooms/${room.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+        },
+        body: JSON.stringify(room),
+      }
+    );
 
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
 
   const updateRoomMutation = useMutation({
@@ -84,7 +84,19 @@ const HotelRooms = ({
     }
   }, [updatedRoom]);
 
-  const { data: roomData } = useHotelRooms(hotelId);
+  const {
+    error: roomError,
+    isLoading: roomLoading,
+    data: roomData,
+  } = useHotelRooms(hotelId);
+
+  if (roomError) {
+    return <p>Error loading rooms: {roomError.message}</p>;
+  }
+
+  if (roomLoading) {
+    return <p className="mx-6 mt-5 text-2xl md:mx-10">Loading...</p>;
+  }
 
   if (roomData?.length === 0) {
     return <p>No rooms at this hotel</p>;

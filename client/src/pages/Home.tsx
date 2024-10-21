@@ -1,10 +1,8 @@
 import { useState } from "react";
-
 import Slider from "react-slick";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
-// Import css files
 import { useQuery } from "@tanstack/react-query";
 import Popup from "reactjs-popup";
 import "slick-carousel/slick/slick-theme.css";
@@ -49,10 +47,19 @@ const Home = () => {
         "Allow-Access-Control-Origin": "http://localhost:5173/",
       },
     });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
     return await response.json();
   };
 
-  const { isLoading, error, data } = useQuery<THotel[]>({
+  const {
+    isLoading: hotelLoading,
+    error: hotelError,
+    data: hotelData,
+  } = useQuery<THotel[]>({
     queryKey: ["hotels"],
     queryFn: fetchData,
   });
@@ -66,17 +73,18 @@ const Home = () => {
     }
   };
 
-  if (error) {
+  if (hotelError) {
     return (
       <>
         <Header />
         <p className="mx-6 mt-5 text-2xl md:mx-10">Error fetching data</p>
+        <p>{hotelError.message}</p>
         <Footer />
       </>
     );
   }
 
-  if (isLoading) {
+  if (hotelLoading) {
     return (
       <>
         <Header />
@@ -139,8 +147,8 @@ const Home = () => {
                 placeholder="Search Hotel"
               />
               <div>
-                {data &&
-                  data
+                {hotelData &&
+                  hotelData
                     .filter((hotel) =>
                       hotel.name?.toLowerCase().includes(search.toLowerCase())
                     )
@@ -165,8 +173,8 @@ const Home = () => {
             </h2>
           </div>
           <Slider className="mt-6" {...settings}>
-            {data &&
-              data
+            {hotelData &&
+              hotelData
                 .filter((hotel) => hotel.location == location)
                 .map((hotel) => {
                   return (
@@ -189,8 +197,8 @@ const Home = () => {
             </h2>
           </div>
           <div className="mt-6 flex flex-col gap-2 pb-5 md:grid md:grid-cols-2 xl:grid-cols-3 xl:pb-10">
-            {data &&
-              data.slice(0, 6).map((hotel: THotel) => {
+            {hotelData &&
+              hotelData.slice(0, 6).map((hotel: THotel) => {
                 return (
                   <HotelCard key={hotel.id} data={hotel} variant="popular" />
                 );

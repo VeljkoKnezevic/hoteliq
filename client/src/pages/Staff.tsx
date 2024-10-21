@@ -4,13 +4,11 @@ import Popup from "reactjs-popup";
 import Header from "../components/Header";
 import HotelCard from "../components/HotelCard";
 import HotelRooms from "../components/HotelRooms";
-import { useAuth } from "../context/AuthContext";
 import { handleInputChange } from "../misc/Helpers";
 import { ProfileInfo, THotel, TRoom } from "../types";
 
 const Staff = () => {
   const queryClient = useQueryClient();
-  const { getUser } = useAuth();
 
   const [hotelSearch, setHotelSearch] = useState<string>("");
   const [userSearch, setUserSearch] = useState<string>("");
@@ -46,29 +44,36 @@ const Staff = () => {
         "Content-type": "application/json",
       },
     });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
     return await response.json();
   };
-  const { data: guestsData } = useQuery<ProfileInfo[]>({
+  const {
+    error: guestError,
+    isLoading: guestLoading,
+    data: guestsData,
+  } = useQuery<ProfileInfo[]>({
     queryKey: ["guests"],
     queryFn: getGuests,
   });
 
   const deleteGuest = async (id: number) => {
-    try {
-      const response = await fetch(`http://localhost:8080/guests/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    const response = await fetch(`http://localhost:8080/guests/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+    return await response.json();
   };
 
-  const deleteMutation = useMutation({
+  const deleteGuestMutation = useMutation({
     mutationFn: deleteGuest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["guests"] });
@@ -82,7 +87,7 @@ const Staff = () => {
   const handleDeleteClick = (id: number | null) => {
     if (id) {
       if (confirm(`Are you sure you want to delete user with id: ${id} `)) {
-        deleteMutation.mutate(id);
+        deleteGuestMutation.mutate(id);
       } else {
         return;
       }
@@ -96,30 +101,39 @@ const Staff = () => {
         "Content-type": "application/json",
       },
     });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
     return await response.json();
   };
 
-  const { data: hotelsData } = useQuery<THotel[]>({
+  const {
+    error: hotelsError,
+    isLoading: hotelsLoading,
+    data: hotelsData,
+  } = useQuery<THotel[]>({
     queryKey: ["hotels"],
     queryFn: getHotels,
   });
 
   const addHotel = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/hotels`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
-        },
-        body: JSON.stringify(newHotelData),
-      });
+    const response = await fetch(`http://localhost:8080/hotels`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        // Authorization: `Bearer ${getUser()?.user.jwt}`,
+      },
+      body: JSON.stringify(newHotelData),
+    });
 
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
+
   const addHotelMutation = useMutation({
     mutationFn: addHotel,
     onSuccess: () => {
@@ -133,36 +147,35 @@ const Staff = () => {
 
   const handleAddHotelSubmitButton = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log(getUser()?.user.jwt);
 
     addHotelMutation.mutate();
   };
-  const updateHotel = async (id: number) => {
-    try {
-      const response = await fetch(`http://localhost:8080/hotels/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
-        },
-        body: JSON.stringify(updateHotelData),
-      });
 
-      return response.json();
-    } catch (err) {
-      console.log(err);
+  const updateHotel = async (id: number) => {
+    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        // Authorization: `Bearer ${getUser()?.user.jwt}`,
+      },
+      body: JSON.stringify(updateHotelData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
 
   const updateHotelMutation = useMutation({
     mutationFn: updateHotel,
     onSuccess: () => {
       console.log("Successfully updated hotel");
-
       queryClient.invalidateQueries({ queryKey: ["hotels"] });
     },
     onError: (err) => {
-      console.error(err);
+      console.error("Hotel update unsuccessful: ", err);
     },
   });
 
@@ -173,17 +186,18 @@ const Staff = () => {
   };
 
   const deleteHotel = async (id: number) => {
-    try {
-      const response = await fetch(`http://localhost:8080/hotels/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
 
   const deleteHotelMutation = useMutation({
@@ -193,9 +207,7 @@ const Staff = () => {
       queryClient.invalidateQueries({ queryKey: ["hotels"] });
     },
     onError: (err) => {
-      console.log("Hotel deletion unsuccessful");
-
-      console.error(err);
+      console.error("Hotel deletion unsuccessful: ", err);
     },
   });
 
@@ -212,34 +224,33 @@ const Staff = () => {
   // Rooms
 
   const addRoom = async (hotelId: number) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/hotels/${hotelId}/rooms`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            // Authorization: `Bearer ${getUser()?.user.jwt}`,
-          },
-          body: JSON.stringify({ hotelId, ...addRoomData }),
-        }
-      );
+    const response = await fetch(
+      `http://localhost:8080/hotels/${hotelId}/rooms`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+        },
+        body: JSON.stringify({ hotelId, ...addRoomData }),
+      }
+    );
 
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
 
   const addRoomMutation = useMutation({
     mutationFn: addRoom,
     onSuccess: () => {
       console.log("Successfully added room");
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
     },
     onError: (err) => {
-      console.log("Room adding failed");
-
-      console.error(err);
+      console.log("Failed to add room: ", err);
     },
   });
 

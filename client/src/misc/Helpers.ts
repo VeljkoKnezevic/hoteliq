@@ -1,5 +1,4 @@
 import { CalendarSelected } from "@demark-pro/react-booking-calendar";
-import { TReservation } from "../types";
 
 export function parseToken(token: string) {
   if (!token) return;
@@ -38,17 +37,28 @@ export const dateConverter = (
   };
 };
 
-export const convertDateFields = (
-  data: TReservation[],
-  dateFields: string[]
-) => {
-  return data.map((item) => {
-    const newItem = { ...item }; // Create a shallow copy of the item
-    dateFields.forEach((field) => {
-      if (newItem[field] !== undefined) {
-        newItem[field] = new Date(newItem[field]);
-      }
-    });
-    return newItem;
-  });
+export const settings = {
+  dots: true,
+  arrows: true,
+  infinite: true,
+  speed: 600,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  beforeChange: () => setIsSwiping(true),
+  afterChange: () => setIsSwiping(false),
+  responsive: [
+    {
+      breakpoint: 1279,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 767,
+      settings: {
+        arrows: false,
+        slidesToShow: 1,
+      },
+    },
+  ],
 };

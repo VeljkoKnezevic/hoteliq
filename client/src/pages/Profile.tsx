@@ -1,12 +1,15 @@
 import { SyntheticEvent, useState } from "react";
 import Header from "../components/Header";
 import { ProfileInfo } from "../types";
+import { useAuth } from "../context/AuthContext";
 
 const Profile = () => {
+  const { getUser } = useAuth();
+
   const [info, setInfo] = useState<ProfileInfo>({
-    firstName: "Veljko",
-    lastName: "Knezevic",
-    email: "veljkoBitno@gmail.com",
+    firstName: getUser()?.user.guest.firstName ?? "",
+    lastName: getUser()?.user.guest.lastName ?? "",
+    email: getUser()?.user.guest.email ?? "",
   });
 
   // Used to updated based on when

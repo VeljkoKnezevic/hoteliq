@@ -4,17 +4,18 @@ import {
   CalendarSelected,
 } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { convertDateFields, dateConverter } from "../misc/Helpers";
+import { dateConverter } from "../misc/Helpers";
 import { TReservation, TRoom } from "../types";
 import HotelRooms from "./HotelRooms";
 
 const BookingPopup = () => {
   const { id: hotelID } = useParams();
   const { getUser } = useAuth();
+  const queryClient = useQueryClient();
 
   const [selectedDates, setSelectedDays] = useState<CalendarSelected[]>([]);
 
@@ -44,13 +45,23 @@ const BookingPopup = () => {
         },
       }
     );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
     return await response.json();
   };
 
-  const { data: reservationData } = useQuery<TReservation[]>({
+  const {
+    error: reservationError,
+    isLoading: reservationLoading,
+    data: reservationData,
+  } = useQuery<TReservation[]>({
     queryKey: ["reservations"],
     queryFn: () => getReservations(Number(hotelID)),
   });
+
   const reserved: CalendarReserved[] =
     reservationData?.map((data) => ({
       startDate: new Date(data.startDate),
@@ -58,25 +69,26 @@ const BookingPopup = () => {
     })) || [];
 
   const addReservation = async (reservation: TReservation) => {
-    try {
-      const response = await fetch(`http://localhost:8080/reservations`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
-        },
-        body: JSON.stringify(reservation),
-      });
+    const response = await fetch(`http://localhost:8080/reservations`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        // Authorization: `Bearer ${getUser()?.user.jwt}`,
+      },
+      body: JSON.stringify(reservation),
+    });
 
-      return await response.json();
-    } catch (err) {
-      console.log(err);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    return await response.json();
   };
   const addReservationMutation = useMutation({
     mutationFn: addReservation,
     onSuccess: () => {
       console.log("Reservation added successfully");
+      queryClient.invalidateQueries({ queryKey: ["reservations"] });
     },
     onError: (error) => {
       console.error("Error when making a reservation:", error);
@@ -88,6 +100,9 @@ const BookingPopup = () => {
       addReservationMutation.mutate(reservation, {
         onSuccess: () => {
           setUpdatedRoom(selectedRoom);
+        },
+        onError: (err) => {
+          console.log("Error setting the updated room: ", err);
         },
       });
     }
