@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "../context/AuthContext";
 import { parseToken } from "../misc/Helpers";
-import { LoginResponse, TParsedToken } from "../types";
+import { TLoginResponse, TParsedToken } from "../types";
 
 const schema = z.object({
   email: z.string().email(),
@@ -41,7 +41,7 @@ const Login = () => {
       });
     }
 
-    const data: LoginResponse = await response.json();
+    const data: TLoginResponse = await response.json();
     const parsedToken: TParsedToken = parseToken(data.jwt);
 
     userLogin(data, parsedToken);

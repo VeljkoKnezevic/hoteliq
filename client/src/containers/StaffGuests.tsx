@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { SetStateAction } from "react";
-import { ProfileInfo } from "../types";
+import { TProfile } from "../types";
 
 type TStaffGuests = {
   userSearch: string;
@@ -29,7 +29,7 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
     error: guestsError,
     isLoading: guestsLoading,
     data: guestsData,
-  } = useQuery<ProfileInfo[]>({
+  } = useQuery<TProfile[]>({
     queryKey: ["guests"],
     queryFn: getGuests,
   });
@@ -93,11 +93,11 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
 
         {guestsData &&
           guestsData
-            .filter((guest: ProfileInfo) =>
+            .filter((guest: TProfile) =>
               guest.email?.toLowerCase().includes(userSearch.toLowerCase())
             )
             .slice(0, 6)
-            .map((guest: ProfileInfo) => {
+            .map((guest: TProfile) => {
               return (
                 <div
                   className="mb-2 rounded-lg border-2 border-secondary-grey "

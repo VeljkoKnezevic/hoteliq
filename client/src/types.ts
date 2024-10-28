@@ -1,7 +1,7 @@
 export type HotelCardVariants = "nearby" | "popular" | "staff";
 export type Authorities = "GUEST" | "STAFF";
 
-export type ProfileInfo = {
+export type TProfile = {
   id?: number;
   firstName: string;
   lastName: string;
@@ -13,49 +13,6 @@ export type TRegister = {
   lastName?: string;
   email: string;
   password: string;
-};
-
-export type LoginResponse = {
-  guest: {
-    id: number;
-    email: string;
-    firstName?: string;
-    lastName?: string;
-    reservation?: string;
-    authorities: [
-      {
-        id: number;
-        authority: string;
-      },
-    ];
-  };
-  jwt: string;
-};
-
-export type localStorageUser = {
-  user: {
-    guest: {
-      id: number;
-      email: string;
-      firstName?: string;
-      lastName?: string;
-      reservation?: string;
-      authorities: [
-        {
-          id: number;
-          authority: string;
-        },
-      ];
-    };
-    jwt: string;
-  };
-};
-
-export type TParsedToken = {
-  iat: number;
-  iss: string;
-  roles: string;
-  sub: string;
 };
 
 export type TRoom = {
@@ -84,4 +41,47 @@ export type TReservation = {
   hotelId: number;
   guestId: number;
   roomId: number;
+};
+
+export type TLoginResponse = {
+  guest: {
+    id: number;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    reservation?: string;
+    authorities: [
+      {
+        id: number;
+        authority: string;
+      },
+    ];
+  };
+  jwt: string;
+};
+
+export type TLocalStorageUser = {
+  user: {
+    guest: {
+      id: number;
+      email: string;
+      firstName?: string;
+      lastName?: string;
+      reservation?: string;
+      authorities: [
+        {
+          id: number;
+          authority: string;
+        },
+      ];
+    };
+    jwt: string;
+  };
+};
+
+export type TParsedToken = {
+  iat: number;
+  iss: string;
+  roles: string;
+  sub: string;
 };

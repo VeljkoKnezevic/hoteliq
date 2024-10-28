@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "../components/Header";
-import { Authorities, ProfileInfo } from "../types";
+import { Authorities, TProfile } from "../types";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const Profile = () => {
   const authority: Authorities = getUser()?.user.guest.authorities[0]
     .authority as Authorities;
 
-  const [info, setInfo] = useState<ProfileInfo>({
+  const [info, setInfo] = useState<TProfile>({
     firstName: getUser()?.user.guest.firstName ?? "",
     lastName: getUser()?.user.guest.lastName ?? "",
     email: getUser()?.user.guest.email ?? "",
@@ -19,7 +19,7 @@ const Profile = () => {
   // Used to updated based on when
   // the form is submited insted of when input is changed,
   // to be able to cancel the changes
-  const [updated, setUpdated] = useState<ProfileInfo>({ ...info });
+  const [updated, setUpdated] = useState<TProfile>({ ...info });
 
   // When set to true input info can be changed
   const [editing, setEditing] = useState<boolean>(false);

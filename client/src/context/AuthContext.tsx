@@ -5,13 +5,13 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { LoginResponse, TParsedToken, localStorageUser } from "../types";
+import { TLoginResponse, TParsedToken, TLocalStorageUser } from "../types";
 
 type AuthContextType = {
-  user: LoginResponse | null;
-  getUser: () => localStorageUser | null;
+  user: TLoginResponse | null;
+  getUser: () => TLocalStorageUser | null;
   userIsAuthenticated: () => boolean;
-  userLogin: (user: LoginResponse, token: TParsedToken) => void;
+  userLogin: (user: TLoginResponse, token: TParsedToken) => void;
   userLogout: () => void;
 };
 
@@ -22,14 +22,14 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<LoginResponse | null>(null);
+  const [user, setUser] = useState<TLoginResponse | null>(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     setUser(storedUser);
   }, []);
 
-  const getUser = (): localStorageUser | null => {
+  const getUser = (): TLocalStorageUser | null => {
     return JSON.parse(localStorage.getItem("user") || "null");
   };
 
@@ -43,7 +43,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     return true;
   };
 
-  const userLogin = (user: LoginResponse, token: TParsedToken): void => {
+  const userLogin = (user: TLoginResponse, token: TParsedToken): void => {
     const toStore = { user, token };
 
     localStorage.setItem("user", JSON.stringify(toStore));
