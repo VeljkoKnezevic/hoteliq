@@ -104,7 +104,7 @@ const BookingPopup = () => {
     }
   }, [reservation]);
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const guestId = getUser()?.user.guest.id;

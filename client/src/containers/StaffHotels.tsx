@@ -81,7 +81,7 @@ const StaffHotels = ({
     },
   });
 
-  const handleAddHotelSubmitButton = (e: React.SyntheticEvent) => {
+  const handleAddHotelSubmitButton = (e: React.FormEvent) => {
     e.preventDefault();
 
     addHotelMutation.mutate();
@@ -115,7 +115,7 @@ const StaffHotels = ({
     },
   });
 
-  const handleEditHotelSubmit = (e: React.SyntheticEvent, hotel: THotel) => {
+  const handleEditHotelSubmit = (e: React.FormEvent, hotel: THotel) => {
     e.preventDefault();
 
     if (hotel.id) updateHotelMutation.mutate(hotel.id);
@@ -190,7 +190,7 @@ const StaffHotels = ({
     },
   });
 
-  const handleAddRoomSubmit = (e: React.SyntheticEvent, hotelId: number) => {
+  const handleAddRoomSubmit = (e: React.FormEvent, hotelId: number) => {
     e.preventDefault();
     if (hotelId) addRoomMutation.mutate(hotelId);
   };

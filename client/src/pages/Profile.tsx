@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
 import { ProfileInfo } from "../types";
 import { useAuth } from "../context/AuthContext";
@@ -20,7 +20,7 @@ const Profile = () => {
   // When set to true input info can be changed
   const [editing, setEditing] = useState<boolean>(false);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setInfo((prev) => ({
