@@ -40,7 +40,7 @@ const Staff = () => {
           Staff page
         </h2>
 
-        {/* <StaffGuests userSearch={userSearch} setUserSearch={setUserSearch} /> */}
+        <StaffGuests userSearch={userSearch} setUserSearch={setUserSearch} />
 
         <StaffHotels
           hotelSearch={hotelSearch}

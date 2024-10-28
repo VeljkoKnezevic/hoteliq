@@ -13,17 +13,17 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
 
   // Guests
   const getGuests = async () => {
-    const response = await axios.get("http://localhost:8080/guests", {
+    const response = await fetch("http://localhost:8080/guests", {
       headers: {
         "Content-type": "application/json",
       },
     });
 
-    // if (!response.ok) {
-    //   throw new Error("Network response was not ok");
-    // }
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-    return await response.data();
+    return await response.json();
   };
 
   const {
