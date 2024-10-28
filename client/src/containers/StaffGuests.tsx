@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ProfileInfo } from "../types";
 import { SetStateAction } from "react";
-import axios from "axios";
+import { ProfileInfo } from "../types";
 
 type TStaffGuests = {
   userSearch: string;

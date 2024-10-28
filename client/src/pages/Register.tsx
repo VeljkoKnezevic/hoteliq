@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAuth } from "../context/AuthContext";
 
 const schema = z.object({
   firstName: z.string(),
@@ -14,7 +15,7 @@ type FormFields = z.infer<typeof schema>;
 
 const Register = () => {
   const navigate = useNavigate();
-
+  const { userIsAuthenticated } = useAuth();
   const {
     register,
     handleSubmit,
@@ -49,6 +50,10 @@ const Register = () => {
       navigate("/login");
     }
   };
+
+  if (userIsAuthenticated()) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <>

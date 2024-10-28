@@ -27,23 +27,18 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<PageNotFound />} />
               <Route
-                path="/profile/:id"
+                path="/profile"
                 element={
                   <PrivateRoute
                     element={<Profile />}
-                    roles={["STAFF", "GUEST"]}
+                    roles={["GUEST", "STAFF"]}
                   />
                 }
               />
 
               <Route
                 path="/staff"
-                element={
-                  <PrivateRoute
-                    element={<Staff />}
-                    roles={["STAFF", "GUEST"]}
-                  />
-                }
+                element={<PrivateRoute element={<Staff />} roles={["STAFF"]} />}
               />
             </Routes>
           </Router>

@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Header from "../components/Header";
-import { ProfileInfo } from "../types";
+import { Authorities, ProfileInfo } from "../types";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { getUser } = useAuth();
+
+  const authority: Authorities = getUser()?.user.guest.authorities[0]
+    .authority as Authorities;
 
   const [info, setInfo] = useState<ProfileInfo>({
     firstName: getUser()?.user.guest.firstName ?? "",
@@ -37,6 +41,7 @@ const Profile = () => {
     setEditing(false);
     // Returns the input to the previous state
     setUpdated({ ...info });
+    console.log(authority);
   };
 
   return (
@@ -130,6 +135,11 @@ const Profile = () => {
             </div>
           )}
         </form>
+        {authority === "STAFF" && (
+          <div className="flex justify-end text-primary-blue underline">
+            <Link to={"/staff"}>Go to staff page</Link>
+          </div>
+        )}
       </main>
     </>
   );

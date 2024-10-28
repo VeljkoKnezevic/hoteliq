@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
-  const { getUser, userLogout, userIsAuthenticated } = useAuth();
+  const { userLogout, userIsAuthenticated } = useAuth();
 
   const isAuthenticated = userIsAuthenticated();
-
-  const user = getUser()?.user;
 
   return (
     <header className="mx-6 mt-2 flex items-center justify-between pt-6 text-primary-blue md:mx-10 xl:mx-auto xl:min-w-[1200px]  xl:max-w-[1200px] 2xl:min-w-[1440px]  2xl:max-w-[1440px]">
@@ -21,7 +19,7 @@ const Header = () => {
           <Link to={"/"}>
             <button onClick={userLogout}>Logout</button>
           </Link>
-          <Link to={`/profile/${user?.guest.id}`}>
+          <Link to={`/profile`}>
             <img src="/profile.svg" alt="Profile" />
           </Link>
         </div>
