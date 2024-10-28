@@ -10,4 +10,5 @@ public interface GuestRepository extends CrudRepository<Guest, Integer> {
 
     Optional<Guest> findGuestByEmail(String email);
 
+
  }

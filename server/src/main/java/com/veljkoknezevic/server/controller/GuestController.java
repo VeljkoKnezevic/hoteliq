@@ -1,5 +1,6 @@
 package com.veljkoknezevic.server.controller;
 
+import com.veljkoknezevic.server.dto.GuestDTO;
 import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.service.GuestService;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class GuestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Guest>> getGuests() {
-        List<Guest> guests = guestService.findALlGuests();
+    public ResponseEntity<List<GuestDTO>> getGuests() {
+        List<GuestDTO> guests = guestService.findALlGuests();
 
         return ResponseEntity.ok(guests);
     }
