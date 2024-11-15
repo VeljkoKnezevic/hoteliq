@@ -18,7 +18,7 @@ const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
           >
             <img
               className="rounded-t-lg"
-              src={`/${data.location}-${(data.id % 3) + 1}.png`}
+              src={`/${data.location}-${((data.id ?? 0) % 3) + 1}.png`}
               alt=""
             />
             <div className="p-3">
@@ -57,7 +57,7 @@ const HotelCard = ({ variant, data, handleSwiping }: THotelCard) => {
             <img
               width={84}
               className="h-[84px] rounded-sm"
-              src={`/${data.location}-${(data.id % 3) + 1}.png`}
+              src={`/${data.location}-${((data.id ?? 0) % 3) + 1}.png`}
               alt=""
             />
             <div className="py-1">
