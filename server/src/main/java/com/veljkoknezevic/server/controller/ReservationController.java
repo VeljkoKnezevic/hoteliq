@@ -6,7 +6,9 @@ import com.veljkoknezevic.server.model.Guest;
 import com.veljkoknezevic.server.model.Reservation;
 import com.veljkoknezevic.server.repository.ReservationRepository;
 import com.veljkoknezevic.server.service.ReservationService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,11 @@ public class ReservationController {
 
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO dto) {
+    public ResponseEntity<Reservation> createReservation(@RequestBody @Valid ReservationDTO dto, BindingResult bindingResult)  {
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         Reservation reservation = reservationService.addReservation(dto);
 
         return ResponseEntity.ok(reservation);

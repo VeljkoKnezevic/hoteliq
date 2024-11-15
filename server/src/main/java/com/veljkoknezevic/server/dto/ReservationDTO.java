@@ -1,13 +1,25 @@
 package com.veljkoknezevic.server.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 import java.util.Objects;
 
 public final class ReservationDTO {
+    @NotBlank(message = "Start date is required")
     private Date startDate;
+    @NotBlank(message = "End date is required")
+    @Future(message = "End date must be a future date")
     private Date endDate;
+
+    @NotBlank(message = "Hotel id is required")
     private int hotelId;
+
+    @NotBlank(message = "Room id is required")
     private int roomId;
+
+    @NotBlank(message = "Guest id is required")
     private int guestId;
 
     public ReservationDTO(Date startDate, Date endDate, int hotelId, int roomId, int guestId) {

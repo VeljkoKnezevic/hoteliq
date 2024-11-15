@@ -1,10 +1,9 @@
 package com.veljkoknezevic.server.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Room {
@@ -13,8 +12,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Floor is required")
     private int floor;
 
+    @NotBlank(message = "Room number is required")
     private int number;
 
     private boolean isAvailable;

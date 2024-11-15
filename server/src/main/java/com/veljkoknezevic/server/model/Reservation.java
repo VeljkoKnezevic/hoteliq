@@ -2,6 +2,10 @@ package com.veljkoknezevic.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -15,14 +19,22 @@ public class Reservation {
     private int id;
     @ManyToOne
     @JoinColumn(name = "hotelId", nullable = false)
+    @NotNull(message = "Hotel is required")
     private Hotel hotel;
     @ManyToOne
     @JoinColumn(name = "roomId", nullable = false)
+    @NotNull(message = "Room is required")
     private Room room;
+
+    @NotBlank(message = "Start date is required")
     private Date start;
+
+    @NotBlank(message = "End date is required")
+    @Future(message = "End date must be a future date")
     private Date end;
     @ManyToOne
     @JoinColumn(name = "guest_id", nullable = false)
+    @NotBlank(message = "Guest is required")
     private Guest guest;
 
     public Reservation(Hotel hotel, Room room, Date start, Date end, Guest guest) {

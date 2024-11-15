@@ -4,7 +4,9 @@ import com.veljkoknezevic.server.model.Hotel;
 import com.veljkoknezevic.server.model.Room;
 import com.veljkoknezevic.server.service.HotelService;
 import com.veljkoknezevic.server.service.RoomService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,14 +40,22 @@ public class HotelController {
     }
 
     @PostMapping
-    public ResponseEntity<Hotel> addHotel(@RequestBody Hotel hotel) {
+    public ResponseEntity<Hotel> addHotel(@RequestBody @Valid Hotel hotel, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         Hotel addedHotel = hotelService.addHotel(hotel);
 
         return ResponseEntity.ok(addedHotel);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Hotel> editHotel(@PathVariable int id, @RequestBody Hotel hotel) {
+    public ResponseEntity<Hotel> editHotel(@PathVariable int id, @RequestBody @Valid Hotel hotel, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         Hotel response = hotelService.editHotel(id,hotel);
 
         return ResponseEntity.ok(response);
@@ -68,14 +78,22 @@ public class HotelController {
     }
 
     @PostMapping("/{hotelId}/rooms")
-    public ResponseEntity<Room> addRoom(@PathVariable int hotelId, @RequestBody Room room) {
+    public ResponseEntity<Room> addRoom(@PathVariable int hotelId, @RequestBody @Valid Room room, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         Room response = roomService.addRoom(room, hotelId);
 
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{hotelId}/rooms/{roomId}")
-    public ResponseEntity<Room> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody Room room) {
+    public ResponseEntity<Room> editRoom(@PathVariable int hotelId, @PathVariable int roomId, @RequestBody @Valid Room room, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
 
         Room response = roomService.editRoom(roomId, hotelId, room);
 

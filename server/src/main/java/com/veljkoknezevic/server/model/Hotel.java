@@ -2,6 +2,7 @@ package com.veljkoknezevic.server.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,14 +15,24 @@ public class Hotel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Hotel name is required")
+    @Size(min = 3, max = 70, message = "Hotel name must be between 3 and 70 characters")
     private String name;
 
+    @NotBlank(message = "Address is required")
+    @Size(min = 3, max = 70, message = "Address must be between 3 and 70 characters")
     private String address;
 
+    @NotBlank(message = "Location is required")
+    @Size(min = 3, max = 70, message = "Location must be between 3 and 70 characters")
     private String location;
 
+    @NotNull(message = "Rating is required")
+    @DecimalMin(value = "1.0", message = "Rating must be at least 1.0")
+    @DecimalMax(value = "5.0", message = "Rating must not exceed 5.0")
     private Double rating;
 
+    @NotBlank(message = "Price is required")
     private String price;
 
     @OneToMany(mappedBy = "hotel")

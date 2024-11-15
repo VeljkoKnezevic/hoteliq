@@ -1,11 +1,18 @@
 package com.veljkoknezevic.server.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class DatesDTO {
 
+    @NotBlank(message = "Start date is required")
     private Date startDate;
+    @NotBlank(message = "End date is required")
+    @Future(message = "End date must be a future date")
     private Date endDate;
+
     public DatesDTO() {
     }
 
