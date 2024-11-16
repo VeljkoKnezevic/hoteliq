@@ -60,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/hotels/*/rooms").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hotels").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/hotels/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reservations/**").permitAll()
                         .anyRequest().authenticated())
                 .build();
