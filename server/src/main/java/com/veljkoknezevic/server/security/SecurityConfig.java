@@ -48,17 +48,20 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .oauth2ResourceServer(oauth -> oauth.jwt(c -> c.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(c -> c.anyRequest().permitAll())
-//                        .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers("/guests/**").permitAll()
-//                        // /hotels/** refers to both the hotel and room endpoints of that http method
-//                        .requestMatchers(HttpMethod.GET, "/hotels/**").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/reservations", "/reservations/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/reservations").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/hotels", "/hotels/**").hasRole("STAFF")
-//                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
-//                        .requestMatchers(HttpMethod.DELETE, "/hotels/**", "/reservations/**").hasRole("STAFF")
-//                        .anyRequest().authenticated())
+                .authorizeHttpRequests(c -> c
+                        .requestMatchers(HttpMethod.GET,"/guests").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.POST, "/hotels/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.PUT, "/hotels/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.DELETE, "/hotels/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.POST,"/reservations").hasAnyRole("GUEST", "STAFF")
+                        .requestMatchers(HttpMethod.DELETE, "/reservations/**").hasAnyRole("GUEST", "STAFF")
+                        .requestMatchers(HttpMethod.POST, "/hotels/*/rooms").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.PUT, "hotels/*/rooms/**").hasRole("STAFF")
+                        .requestMatchers(HttpMethod.GET, "/hotels/*/rooms").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/hotels").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reservations/**").permitAll()
+                        .anyRequest().authenticated())
                 .build();
     }
 
