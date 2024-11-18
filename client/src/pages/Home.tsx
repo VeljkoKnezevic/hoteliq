@@ -42,7 +42,7 @@ const Home = () => {
   };
 
   const fetchData = async () => {
-    const response = await fetch("http://localhost:8080/hotels", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/hotels`, {
       headers: {
         "Allow-Access-Control-Origin": "http://localhost:5173/",
       },

@@ -12,7 +12,7 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
 
   // Guests
   const getGuests = async () => {
-    const response = await fetch("http://localhost:8080/guests", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/guests`, {
       headers: {
         "Content-type": "application/json",
       },
@@ -35,12 +35,15 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
   });
 
   const deleteGuest = async (id: number) => {
-    const response = await fetch(`http://localhost:8080/guests/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/guests/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");

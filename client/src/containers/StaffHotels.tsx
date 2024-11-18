@@ -31,7 +31,7 @@ const StaffHotels = ({
 
   // Hotels
   const getHotels = async () => {
-    const response = await fetch("http://localhost:8080/hotels", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/hotels`, {
       headers: {
         "Content-type": "application/json",
       },
@@ -54,7 +54,7 @@ const StaffHotels = ({
   });
 
   const addHotel = async () => {
-    const response = await fetch(`http://localhost:8080/hotels`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/hotels`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -88,14 +88,17 @@ const StaffHotels = ({
   };
 
   const updateHotel = async (id: number) => {
-    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-        // Authorization: `Bearer ${getUser()?.user.jwt}`,
-      },
-      body: JSON.stringify(updateHotelData),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+        },
+        body: JSON.stringify(updateHotelData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -122,12 +125,15 @@ const StaffHotels = ({
   };
 
   const deleteHotel = async (id: number) => {
-    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -161,7 +167,7 @@ const StaffHotels = ({
 
   const addRoom = async (hotelId: number) => {
     const response = await fetch(
-      `http://localhost:8080/hotels/${hotelId}/rooms`,
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${hotelId}/rooms`,
       {
         method: "POST",
         headers: {

@@ -3,6 +3,7 @@ import { Authorities, TRoom } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { translateRoomType } from "../misc/Helpers";
 import { SetStateAction, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 type THotelRooms = {
   hotelId: number;
@@ -21,14 +22,15 @@ const HotelRooms = ({
 }: THotelRooms) => {
   const queryClient = useQueryClient();
 
+  const { getUser } = useAuth();
+
   const getRoomForHotel = async (hotelId: number) => {
     const response = await fetch(
-      `http://localhost:8080/hotels/${hotelId}/rooms`,
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${hotelId}/rooms`,
       {
         method: "GET",
         headers: {
           "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
       }
     );
@@ -49,12 +51,12 @@ const HotelRooms = ({
 
   const updateRoom = async (room: TRoom) => {
     const response = await fetch(
-      `http://localhost:8080/hotels/${hotelId}/rooms/${room.id}`,
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${hotelId}/rooms/${room.id}`,
       {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
         body: JSON.stringify(room),
       }

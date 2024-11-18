@@ -38,7 +38,7 @@ const BookingPopup = () => {
 
   const getReservations = async (hotelId: number) => {
     const response = await fetch(
-      `http://localhost:8080/reservations/${hotelId}`,
+      `${import.meta.env.VITE_BACKEND_API}/reservations/${hotelId}`,
       {
         headers: {
           "Content-type": "application/json",
@@ -65,14 +65,17 @@ const BookingPopup = () => {
     })) || [];
 
   const addReservation = async (reservation: TReservation) => {
-    const response = await fetch(`http://localhost:8080/reservations`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        // Authorization: `Bearer ${getUser()?.user.jwt}`,
-      },
-      body: JSON.stringify(reservation),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/reservations`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
+        },
+        body: JSON.stringify(reservation),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");

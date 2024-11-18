@@ -24,11 +24,14 @@ const Details = () => {
   };
 
   const fetchHotelById = async () => {
-    const response = await fetch(`http://localhost:8080/hotels/${id}`, {
-      headers: {
-        "Allow-Access-Control-Origin": "http://localhost:5173/",
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/hotels/${id}`,
+      {
+        headers: {
+          "Allow-Access-Control-Origin": "http://localhost:5173/",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response is not ok");

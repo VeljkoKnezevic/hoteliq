@@ -27,13 +27,16 @@ const Login = () => {
   });
 
   const handleLogin: SubmitHandler<FormFields> = async (values) => {
-    const response = await fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API}/auth/login`,
+      {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       setError("root", {
