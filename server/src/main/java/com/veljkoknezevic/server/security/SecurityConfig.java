@@ -9,6 +9,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import com.veljkoknezevic.server.repository.GuestRepository;
 import com.veljkoknezevic.server.service.CustomUserDetailsService;
 import com.veljkoknezevic.server.util.RsaKeyProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,6 +33,9 @@ import java.util.List;
 
 @Configuration
 public class SecurityConfig {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     private final GuestRepository guestRepository;
 
@@ -106,7 +110,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //Make the below setting as * to allow connection from any hos
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173", frontendUrl));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("*"));

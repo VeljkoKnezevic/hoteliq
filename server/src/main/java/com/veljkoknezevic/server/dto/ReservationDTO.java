@@ -1,25 +1,27 @@
 package com.veljkoknezevic.server.dto;
 
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.Objects;
 
 public final class ReservationDTO {
-    @NotBlank(message = "Start date is required")
+    @NotNull(message = "Start date is required")
     private Date startDate;
-    @NotBlank(message = "End date is required")
+    @NotNull(message = "End date is required")
     @Future(message = "End date must be a future date")
     private Date endDate;
 
-    @NotBlank(message = "Hotel id is required")
+    @Min(value = 0,message = "Hotel id is required")
     private int hotelId;
 
-    @NotBlank(message = "Room id is required")
+   @Min(value = 0,message = "Room id is required")
     private int roomId;
 
-    @NotBlank(message = "Guest id is required")
+   @Min(value = 0,message = "Guest id is required")
     private int guestId;
 
     public ReservationDTO(Date startDate, Date endDate, int hotelId, int roomId, int guestId) {
@@ -30,8 +32,6 @@ public final class ReservationDTO {
         this.guestId = guestId;
     }
 
-    public ReservationDTO() {
-    }
 
     public Date getStartDate() {
         return startDate;

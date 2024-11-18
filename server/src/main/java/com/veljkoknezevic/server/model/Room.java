@@ -2,6 +2,7 @@ package com.veljkoknezevic.server.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,10 +13,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Floor is required")
+    @Min(value=0,message = "Floor number must be positive")
     private int floor;
 
-    @NotBlank(message = "Room number is required")
+    @Min(value=0,message = "Room number is required")
     private int number;
 
     private boolean isAvailable;

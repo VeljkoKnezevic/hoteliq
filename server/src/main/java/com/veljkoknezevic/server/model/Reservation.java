@@ -26,15 +26,15 @@ public class Reservation {
     @NotNull(message = "Room is required")
     private Room room;
 
-    @NotBlank(message = "Start date is required")
+    @NotNull(message = "Start date is required")
     private Date start;
 
-    @NotBlank(message = "End date is required")
+    @NotNull(message = "End date is required")
     @Future(message = "End date must be a future date")
     private Date end;
     @ManyToOne
     @JoinColumn(name = "guest_id", nullable = false)
-    @NotBlank(message = "Guest is required")
+    @NotNull(message = "Guest is required")
     private Guest guest;
 
     public Reservation(Hotel hotel, Room room, Date start, Date end, Guest guest) {
