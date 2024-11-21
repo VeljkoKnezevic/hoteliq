@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { SetStateAction } from "react";
+import { useAuth } from "../context/AuthContext";
 import { TProfile } from "../types";
 
 type TStaffGuests = {
@@ -10,11 +11,14 @@ type TStaffGuests = {
 const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
   const queryClient = useQueryClient();
 
+  const { getUser } = useAuth();
+
   // Guests
   const getGuests = async () => {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/guests`, {
       headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${getUser()?.user.jwt}`,
       },
     });
 
@@ -41,6 +45,7 @@ const StaffGuests = ({ userSearch, setUserSearch }: TStaffGuests) => {
         method: "DELETE",
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
       }
     );

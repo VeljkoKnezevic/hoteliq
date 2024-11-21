@@ -5,6 +5,7 @@ import HotelCard from "../components/HotelCard";
 import Popup from "reactjs-popup";
 import HotelRooms from "./HotelRooms";
 import { SetStateAction } from "react";
+import { useAuth } from "../context/AuthContext";
 
 type TStaffHotels = {
   hotelSearch: string;
@@ -28,6 +29,7 @@ const StaffHotels = ({
   setAddRoomData,
 }: TStaffHotels) => {
   const queryClient = useQueryClient();
+  const { getUser } = useAuth();
 
   // Hotels
   const getHotels = async () => {
@@ -58,7 +60,7 @@ const StaffHotels = ({
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        // Authorization: `Bearer ${getUser()?.user.jwt}`,
+        Authorization: `Bearer ${getUser()?.user.jwt}`,
       },
       body: JSON.stringify(newHotelData),
     });
@@ -94,7 +96,7 @@ const StaffHotels = ({
         method: "PUT",
         headers: {
           "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
         body: JSON.stringify(updateHotelData),
       }
@@ -131,6 +133,7 @@ const StaffHotels = ({
         method: "DELETE",
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
       }
     );
@@ -172,7 +175,7 @@ const StaffHotels = ({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          // Authorization: `Bearer ${getUser()?.user.jwt}`,
+          Authorization: `Bearer ${getUser()?.user.jwt}`,
         },
         body: JSON.stringify({ hotelId, ...addRoomData }),
       }
