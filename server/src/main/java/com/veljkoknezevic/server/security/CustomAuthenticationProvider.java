@@ -35,7 +35,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if(email.equals(guest.getEmail()) && passwordEncoder.matches(password, guest.getPassword())) {
             Set<Role> roles = new HashSet<>();
-            roles.add(new Role(1, "GUEST"));
+            guest.getAuthorities().forEach(authority -> {
+                String roleName = authority.getAuthority();
+                roles.add(new Role(1, roleName));
+            });
 
             return new UsernamePasswordAuthenticationToken(email, password, roles);
         } else {
