@@ -2,6 +2,10 @@
 
 A hotel management app that allows users to easily search, compare, and book stays at hotels, built with React, Spring, Typescript, and Tailwind.
 
+## Live version
+
+https://hoteliq-chi.vercel.app/
+
 ## Project Status
 
 This project is currently in development. Guests should be able to cancel their reservations.
