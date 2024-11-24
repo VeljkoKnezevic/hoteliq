@@ -23,7 +23,7 @@ This project is currently in development. Guests should be able to cancel their 
 Follow these steps to set up and run the project locally. Ensure you have Node.js, npm, and a JDK (Java Development Kit) installed globally on your machine.
 Clone the Repository
 
-`https://github.com/VeljkoKnezevic/hoteliq.git`
+`git clone https://github.com/VeljkoKnezevic/hoteliq.git`
 
 Navigate to the project directory:
 
