@@ -6,6 +6,10 @@ A hotel management app that allows users to easily search, compare, and book sta
 
 https://hoteliq-chi.vercel.app/
 
+## Login credentials
+Email: admin@gmail.com
+Password: admin123
+
 ## Project Status
 
 This project is currently in development. Guests should be able to cancel their reservations.
