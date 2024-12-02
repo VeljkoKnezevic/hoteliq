@@ -8,6 +8,7 @@ https://hoteliq-chi.vercel.app/
 
 ## Login credentials
 Email: admin@gmail.com
+
 Password: admin123
 
 ## Project Status
